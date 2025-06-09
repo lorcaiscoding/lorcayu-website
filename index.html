@@ -9,6 +9,15 @@
   <canvas id="gameCanvas"></canvas>
   <div class="blur-overlay"></div>
   <div id="top-left" onclick="navigateToHome()">Lorca Yu</div>
+  
+  <!-- 滚动文字 -->
+  <div id="center-text">
+    <div id="scrolling-message">
+      <span>THESE DOTS ON THE LEFT VISUALIZE LIVE CLOUDCOVER DATA • CLICK TO UNLOCK PROJECTS ON THE RIGHT • </span>
+      <span>THESE DOTS ON THE LEFT VISUALIZE LIVE CLOUDCOVER DATA • CLICK TO UNLOCK PROJECTS ON THE RIGHT • </span>
+    </div>
+  </div>
+  
   <div id="top-right"><span id="clock"></span></div>
   <div id="bottom-right">
     <div id="catalog-title">Catalog</div>
@@ -40,10 +49,8 @@
 
     // 导航函数
     function navigateToHome() {
-      // 这里可以跳转到首页或刷新页面
       console.log('Navigate to Home');
-      // 例如：window.location.href = 'index.html';
-      // 或者：location.reload();
+      location.reload();
     }
 
     function navigateToWork() {
