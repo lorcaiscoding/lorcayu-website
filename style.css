@@ -38,8 +38,7 @@ canvas {
   top: 0px;
   left: 10px;
   font-size: 44px;
-  color: white;
-  text-shadow: 1px 1px 2px black; 
+  color: white; 
   letter-spacing: 0.05em;
   z-index: 10;
   cursor: pointer;
@@ -65,6 +64,7 @@ canvas {
   right: 10px;
   text-align: right;
   z-index: 10;
+  transition: opacity 0.3s ease; /* 智能隐藏效果 */
 }
 
 #catalog-title {
@@ -83,4 +83,44 @@ canvas {
 
 #catalog-list div:hover {
   color: rgb(2, 254, 23);
+}
+
+/* 中间滚动文字 */
+#center-text {
+  position: absolute;
+  top: 17px;
+  left: 235px;
+  right: 200px;
+  overflow: hidden;
+  z-index: 10;
+}
+
+#scrolling-message {
+  display: flex;
+  width: max-content;
+  animation: scrollRight 20s linear infinite;
+  font-size: 14px;
+  color: black;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-weight: 800;
+  will-change: transform;
+}
+
+#scrolling-message:hover {
+  animation-play-state: paused;
+}
+
+#scrolling-message span {
+  padding-right: 5px;
+}
+
+/* 关键帧：滚动整个 message 的一半宽度，实现无缝衔接 */
+@keyframes scrollRight {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
 }
