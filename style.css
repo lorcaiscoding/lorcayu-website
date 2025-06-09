@@ -103,7 +103,7 @@ canvas {
   color: black;
   text-transform: uppercase;
   letter-spacing: 2px;
-  font-weight: 800;
+  font-weight: 400;
   will-change: transform;
 }
 
