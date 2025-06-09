@@ -2,9 +2,27 @@ const canvas = document.getElementById('gameCanvas');
 const ctx = canvas.getContext('2d');
 
 let cloudcover = [];
-let poem = [];
+// 新增：项目列表，替代原来的 poem 数组
+let projects = [
+  { name: "La Noche Cíclica", url: "work/la-noche-ciclica.html" },
+  { name: "And So We Dance", url: "work/and-so-we-dance.html" },
+  { name: "Repair Shop", url: "work/repair-shop.html" },
+  { name: "How it Slips", url: "work/how-it-slips.html" },
+  { name: "L'ami intime", url: "work/lami-intime.html" },
+  { name: "Claudia", url: "work/claudia.html" },
+  { name: "The Marvelous Clouds", url: "work/the-marvelous-clouds.html" },
+  { name: "All the Rivers Sound in My Body", url: "work/all-the-rivers-sound-in-my-body.html" },
+  { name: "Barcarolle: June", url: "work/barcarolle-june.html" },
+  { name: "God is a Woman sitting in the Bath", url: "work/god-is-a-woman-sitting-in-the-bath.html" },
+  { name: "Chungking Express", url: "work/chungking-express.html" },
+  { name: "Do Not Feed Alligators", url: "work/do-not-feed-alligators.html" },
+  { name: "I Really Like Your Work", url: "work/i-really-like-your-work.html" },
+  { name: "Seagull, Untitled (Acquired)", url: "work/seagull-untitled-acquired.html" }
+];
 let clickedCircles = [];
 let lines = [];
+// 新增：存储项目名称的点击区域
+let projectClickAreas = [];
 
 let hoverX = -1;
 let hoverY = -1;
@@ -71,14 +89,14 @@ async function fetchData() {
     const data1 = await res1.json();
     cloudcover = data1.hourly.cloudcover || [];
 
-    const res2 = await fetch("https://random-word-api.vercel.app/api?words=168");
-    const data2 = await res2.json();
-    poem = data2;
+    // 移除原来的随机词汇API调用，直接使用项目数据
     
     isDataLoaded = true;
     console.log('Data loaded');
   } catch (err) {
     console.error("API error:", err);
+    // 如果API失败，使用模拟数据以便测试
+    cloudcover = Array.from({length: 24}, () => Math.floor(Math.random() * 100));
     isDataLoaded = true; // 即使失败也继续渲染
   }
 }
@@ -90,21 +108,37 @@ canvas.addEventListener('mousedown', (e) => {
   const panelW = window.innerWidth / 2;
   const panelH = window.innerHeight;
 
-  if (mx > panelW || cloudcover.length === 0) return;
+  // 左侧点击逻辑（保持原有逻辑，但添加智能隐藏）
+  if (mx <= panelW && cloudcover.length > 0) {
+    for (let i = 0; i < cloudcover.length; i++) {
+      let x = map(i, 0, cloudcover.length - 1, 50, panelW - 50);
+      let y = map(cloudcover[i], 0, 100, panelH - 50, 50);
 
-  for (let i = 0; i < cloudcover.length; i++) {
-    let x = map(i, 0, cloudcover.length - 1, 50, panelW - 50);
-    let y = map(cloudcover[i], 0, 100, panelH - 50, 50);
+      const d = Math.hypot(mx - x, my - y);
+      if (d < 5) {
+        clickedCircles.push({ x, y });
 
-    const d = Math.hypot(mx - x, my - y);
-    if (d < 5) {
-      clickedCircles.push({ x, y });
+        if (clickedCircles.length > 1) {
+          const last = clickedCircles[clickedCircles.length - 2];
+          lines.push({ x1: last.x, y1: last.y, x2: x, y2: y });
+        }
 
-      if (clickedCircles.length > 1) {
-        const last = clickedCircles[clickedCircles.length - 2];
-        lines.push({ x1: last.x, y1: last.y, x2: x, y2: y });
+        // 新增：智能隐藏传统导航
+        if (clickedCircles.length === 1) {
+          document.getElementById('bottom-right').style.opacity = '0.4';
+        }
+        break;
       }
-      break;
+    }
+  }
+  // 新增：右侧点击检测（项目名称点击）
+  else if (mx > panelW) {
+    for (let area of projectClickAreas) {
+      if (mx >= area.x && mx <= area.x + area.width && 
+          my >= area.y - area.height && my <= area.y + 5) {
+        window.location.href = area.url;
+        break;
+      }
     }
   }
 });
@@ -121,6 +155,16 @@ canvas.addEventListener('mousemove', (e) => {
   } else {
     hoverX = -1;
     hoverY = -1;
+  }
+
+  // 新增：检查是否悬停在项目名称上，改变鼠标样式
+  canvas.style.cursor = 'default';
+  for (let area of projectClickAreas) {
+    if (mx >= area.x && mx <= area.x + area.width && 
+        my >= area.y - area.height && my <= area.y + 5) {
+      canvas.style.cursor = 'pointer';
+      break;
+    }
   }
 });
 
@@ -186,19 +230,31 @@ function drawDataPoints() {
   }
 }
 
-function drawPoem() {
+// 修改：将原来的 drawPoem 改为 drawProjects
+function drawProjects() {
   const panelW = window.innerWidth / 2;
+  projectClickAreas = []; // 重置点击区域
   
-  // 绘制诗词文本
+  // 绘制项目名称
   ctx.fillStyle = 'black';
   ctx.font = '14px Courier';
   for (let i = 0; i < clickedCircles.length; i++) {
-    if (poem[i]) {
+    if (projects[i]) {
       const c = clickedCircles[i];
-      const word = poem[i];
+      const projectName = projects[i].name;
       const x = panelW + c.x + 25;
       const y = c.y;
-      ctx.fillText(word, x, y);
+      ctx.fillText(projectName, x, y);
+
+      // 计算文本宽度并存储点击区域
+      const textWidth = ctx.measureText(projectName).width;
+      projectClickAreas.push({
+        x: x,
+        y: y,
+        width: textWidth,
+        height: 14,
+        url: projects[i].url
+      });
     }
   }
 }
@@ -227,7 +283,7 @@ function draw() {
   // 如果数据已加载，绘制数据相关内容
   if (isDataLoaded) {
     drawDataPoints();
-    drawPoem();
+    drawProjects(); // 修改：调用新的项目绘制函数
   }
   
   // 绘制鼠标悬停效果
