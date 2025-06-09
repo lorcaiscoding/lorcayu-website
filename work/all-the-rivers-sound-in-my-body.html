@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>All the Rivers Sound in My Body - Lorca Yu</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap');
+
+    @font-face {
+      font-family: 'DINdong';
+      src: url('../assets/fonts/DINdong.woff2') format('woff2');
+      font-weight: normal;
+      font-style: normal;
+    }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: white;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      min-height: 100vh;
+      line-height: 1.4;
+      font-weight: 300;
+    }
+
+    /* 顶部导航 */
+    #top-left {
+      position: fixed;
+      top: 0px;
+      left: 10px;
+      font-size: 44px;
+      color: black;
+      letter-spacing: 0.05em;
+      z-index: 10;
+      cursor: pointer;
+      transition: color 0.3s ease;
+      font-family: 'DINdong', sans-serif;
+    }
+
+    #top-left:hover {
+      color: rgb(2, 254, 23); 
+    }
+
+    #back-button {
+      position: fixed;
+      top: 10px;
+      right: 10px;
+      font-size: 24px;
+      color: black;
+      cursor: pointer;
+      z-index: 10;
+      transition: color 0.3s ease;
+      font-family: 'DINdong', sans-serif;
+    }
+
+    #back-button:hover {
+      color: rgb(2, 254, 23);
+    }
+
+    /* 项目内容容器 */
+    .project-container {
+      padding: 100px 50px 80px 50px;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    /* 项目标题和信息 */
+    .project-header {
+      margin-bottom: 30px;
+      text-align: left;
+    }
+
+    .project-title {
+      font-size: 16px;
+      color: black;
+      margin-bottom: 4px;
+      line-height: 1.3;
+      font-weight: 400;
+    }
+
+    .project-materials {
+      font-size: 11px;
+      color: black;
+      margin-bottom: 4px;
+      font-style: italic;
+      font-weight: 300;
+    }
+
+    /* 主图片 */
+    .hero-image {
+      width: 100%;
+      max-width: 800px;
+      margin: 0 auto 30px auto;
+      display: block;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .hero-image.loaded {
+      opacity: 1;
+    }
+
+    /* 项目描述 */
+    .project-description {
+      font-size: 11px;
+      color: black;
+      line-height: 1.5;
+      margin-bottom: 40px;
+      font-weight: 300;
+    }
+
+    .project-description p {
+      margin-bottom: 16px;
+    }
+
+    /* 图片网格 */
+    .image-gallery {
+      margin-top: 50px;
+    }
+
+    .gallery-container {
+      position: relative;
+      margin-bottom: 15px;
+      padding: 0 80px;
+    }
+
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .gallery-slide {
+      display: none;
+      text-align: center;
+    }
+
+    .gallery-slide.active {
+      display: block;
+    }
+
+    .gallery-image {
+      width: 100%;
+      height: auto;
+      max-height: 500px;
+      object-fit: contain;
+      object-position: center;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .gallery-image.loaded {
+      opacity: 1;
+    }
+
+    /* 轮播导航 */
+    .gallery-nav {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(255, 255, 255, 0.8);
+      border: none;
+      font-size: 18px;
+      padding: 10px 15px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    .gallery-nav:hover {
+      background: rgba(255, 255, 255, 1);
+    }
+
+    .gallery-prev {
+      left: 0;
+    }
+
+    .gallery-next {
+      right: 0;
+    }
+
+    .gallery-indicator {
+      text-align: center;
+      margin-bottom: 10px;
+      font-size: 11px;
+      color: #666;
+      font-weight: 300;
+    }
+
+    /* 图片说明文字 */
+    .gallery-caption {
+      font-size: 10px;
+      color: #666;
+      font-style: italic;
+      text-align: left;
+      font-weight: 300;
+    }
+
+    /* 响应式设计 */
+    @media (max-width: 900px) {
+      .project-container {
+        padding: 80px 30px 50px 30px;
+      }
+      
+      .project-title {
+        font-size: 15px;
+      }
+      
+      .project-description {
+        font-size: 10px;
+      }
+
+      .project-materials {
+        font-size: 10px;
+      }
+
+      .gallery-container {
+        padding: 0 60px;
+      }
+
+      .gallery-image {
+        max-height: 400px;
+      }
+
+      .gallery-caption {
+        font-size: 9px;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .project-container {
+        padding: 80px 20px 50px 20px;
+      }
+      
+      .project-title {
+        font-size: 14px;
+      }
+      
+      .project-description {
+        font-size: 9px;
+      }
+
+      .project-materials {
+        font-size: 9px;
+      }
+
+      .gallery-container {
+        padding: 0 40px;
+      }
+
+      .gallery-image {
+        max-height: 300px;
+      }
+
+      .gallery-caption {
+        font-size: 8px;
+      }
+      
+      #top-left {
+        font-size: 32px;
+      }
+      
+      #back-button {
+        font-size: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- 导航 -->
+  <div id="top-left" onclick="navigateToHome()">Lorca Yu</div>
+  <div id="back-button" onclick="navigateToWork()">← Back to Work</div>
+  
+  <!-- 项目内容 -->
+  <div class="project-container">
+    <!-- 项目标题和信息 -->
+    <div class="project-header">
+      <h1 class="project-title">All the Rivers Sound in My Body (2022)</h1>
+      <div class="project-materials">ArcGIS, scanned palm lines</div>
+    </div>
+
+    <!-- 主图片 -->
+    <img src="../assets/all-the-rivers-sound-in-my-body/hero-image.jpg" alt="All the Rivers Sound in My Body" class="hero-image">
+
+    <!-- 项目描述 -->
+    <div class="project-description">
+      <p>Inspired by Pablo Neruda's verse "All the rivers sound in my body" (<em>Queen</em>), this project explores how marks—bodily, geographic, and symbolic—mediate the space between self and world, memory and terrain. Created in my hometown Wuhan, the "city of a thousand lakes," during the third year of COVID-19 lockdowns, the work draws on ArcGIS to gradually transform the lines of a palm—an intimate and irreplicable mark of identity—into a fictional watershed. The process reimagines the body as both terrain and archive, tracing how meaning is reshaped when ordinary life is put on hold.</p>
+
+      <p>What begins as a record of the body becomes a shifting topography shaped by crisis and the slow erosion of daily meaning. The work reflects on how personal and collective histories flow into one another—especially in times of suspension and rupture. In this layered interplay of skin, software, and imagined geography, it asks how invisible forces leave their traces, and how we come to understand place, time, and self when the coordinates of normal life dissolve. The resulting terrain is neither fully real nor imagined, but suspended—like a river—between presence and disappearance.</p>
+    </div>
+
+    <!-- 图片画廊 -->
+    <div class="image-gallery">
+      <div class="gallery-container">
+        <!-- 图片1 -->
+        <div class="gallery-slide active">
+          <img src="../assets/all-the-rivers-sound-in-my-body/image1.bmp" alt="Palm tracing" class="gallery-image">
+        </div>
+        
+        <!-- 图片2 -->
+        <div class="gallery-slide">
+          <img src="../assets/all-the-rivers-sound-in-my-body/image2.bmp" alt="Contour simulation" class="gallery-image">
+        </div>
+        
+        <!-- 图片3 -->
+        <div class="gallery-slide">
+          <img src="../assets/all-the-rivers-sound-in-my-body/image3.bmp" alt="Terrain extraction" class="gallery-image">
+        </div>
+        
+        <!-- 图片4 -->
+        <div class="gallery-slide">
+          <img src="../assets/all-the-rivers-sound-in-my-body/image4.bmp" alt="Flow direction calculation" class="gallery-image">
+        </div>
+        
+        <!-- 图片5 -->
+        <div class="gallery-slide">
+          <img src="../assets/all-the-rivers-sound-in-my-body/image5.bmp" alt="Sink filling" class="gallery-image">
+        </div>
+        
+        <!-- 图片6 -->
+        <div class="gallery-slide">
+          <img src="../assets/all-the-rivers-sound-in-my-body/image6.bmp" alt="Flow accumulation" class="gallery-image">
+        </div>
+        
+        <!-- 图片7 -->
+        <div class="gallery-slide">
+          <img src="../assets/all-the-rivers-sound-in-my-body/image7.bmp" alt="Flow filtering" class="gallery-image">
+        </div>
+        
+        <!-- 图片8 -->
+        <div class="gallery-slide">
+          <img src="../assets/all-the-rivers-sound-in-my-body/image8.bmp" alt="Stream ordering" class="gallery-image">
+        </div>
+        
+        <!-- 图片9 -->
+        <div class="gallery-slide">
+          <img src="../assets/all-the-rivers-sound-in-my-body/image9.bmp" alt="Stream extraction" class="gallery-image">
+        </div>
+        
+        <!-- 图片10 -->
+        <div class="gallery-slide">
+          <img src="../assets/all-the-rivers-sound-in-my-body/image10.bmp" alt="Watershed delineation" class="gallery-image">
+        </div>
+        
+        <!-- 图片11 -->
+        <div class="gallery-slide">
+          <img src="../assets/all-the-rivers-sound-in-my-body/image11.bmp" alt="Result" class="gallery-image">
+        </div>
+        
+        <button class="gallery-nav gallery-prev" onclick="previousSlide()">‹</button>
+        <button class="gallery-nav gallery-next" onclick="nextSlide()">›</button>
+      </div>
+      
+      <div class="gallery-indicator">
+        <span id="current-slide">1</span> / 11
+      </div>
+      
+      <div class="gallery-caption" id="gallery-caption">palm tracing</div>
+    </div>
+  </div>
+
+  <script>
+    let currentSlideIndex = 0;
+    const totalSlides = 11;
+    
+    // 每张图片的说明文字
+    const slideCaptions = [
+      "palm tracing",
+      "contour simulation",
+      "terrain extraction", 
+      "flow direction calculation",
+      "sink filling",
+      "flow accumulation",
+      "flow filtering",
+      "stream ordering",
+      "stream extraction",
+      "watershed delineation",
+      "result"
+    ];
+
+    function navigateToHome() {
+      window.location.href = '../index.html';
+    }
+
+    function navigateToWork() {
+      window.location.href = '../work.html';
+    }
+
+    function showSlide(index) {
+      const slides = document.querySelectorAll('.gallery-slide');
+      slides.forEach((slide, i) => {
+        slide.classList.toggle('active', i === index);
+      });
+      document.getElementById('current-slide').textContent = index + 1;
+      document.getElementById('gallery-caption').textContent = slideCaptions[index];
+    }
+
+    function nextSlide() {
+      currentSlideIndex = (currentSlideIndex + 1) % totalSlides;
+      showSlide(currentSlideIndex);
+    }
+
+    function previousSlide() {
+      currentSlideIndex = (currentSlideIndex - 1 + totalSlides) % totalSlides;
+      showSlide(currentSlideIndex);
+    }
+
+    // 键盘导航
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'ArrowLeft') {
+        previousSlide();
+      } else if (e.key === 'ArrowRight') {
+        nextSlide();
+      }
+    });
+
+    document.addEventListener('DOMContentLoaded', function() {
+      const images = document.querySelectorAll('.hero-image, .gallery-image');
+      
+      images.forEach(function(img) {
+        if (img.complete) {
+          img.classList.add('loaded');
+        } else {
+          img.addEventListener('load', function() {
+            img.classList.add('loaded');
+          });
+        }
+      });
+    });
+  </script>
+</body>
+</html>

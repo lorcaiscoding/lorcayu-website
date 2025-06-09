@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Claudia - Lorca Yu</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap');
+
+    @font-face {
+      font-family: 'DINdong';
+      src: url('../assets/fonts/DINdong.woff2') format('woff2');
+      font-weight: normal;
+      font-style: normal;
+    }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: white;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      min-height: 100vh;
+      line-height: 1.4;
+      font-weight: 300;
+    }
+
+    /* 顶部导航 */
+    #top-left {
+      position: fixed;
+      top: 0px;
+      left: 10px;
+      font-size: 44px;
+      color: black;
+      letter-spacing: 0.05em;
+      z-index: 10;
+      cursor: pointer;
+      transition: color 0.3s ease;
+      font-family: 'DINdong', sans-serif;
+    }
+
+    #top-left:hover {
+      color: rgb(2, 254, 23); 
+    }
+
+    #back-button {
+      position: fixed;
+      top: 10px;
+      right: 10px;
+      font-size: 24px;
+      color: black;
+      cursor: pointer;
+      z-index: 10;
+      transition: color 0.3s ease;
+      font-family: 'DINdong', sans-serif;
+    }
+
+    #back-button:hover {
+      color: rgb(2, 254, 23);
+    }
+
+    /* 项目内容容器 */
+    .project-container {
+      padding: 100px 50px 80px 50px;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    /* 项目标题和信息 */
+    .project-header {
+      margin-bottom: 30px;
+      text-align: left;
+    }
+
+    .project-title {
+      font-size: 16px;
+      color: black;
+      margin-bottom: 4px;
+      line-height: 1.3;
+      font-weight: 400;
+    }
+
+    .project-materials {
+      font-size: 11px;
+      color: black;
+      margin-bottom: 4px;
+      font-style: italic;
+      font-weight: 300;
+    }
+
+    /* 主图片 */
+    .hero-image {
+      width: 100%;
+      max-width: 800px;
+      margin: 0 auto 30px auto;
+      display: block;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      border: 1px solid #ddd;
+    }
+
+    .hero-image.loaded {
+      opacity: 1;
+    }
+
+    /* 轻背景信息 */
+    .workshop-info {
+      font-size: 11px;
+      color: #666;
+      line-height: 1.5;
+      margin-bottom: 20px;
+      font-weight: 300;
+      font-style: italic;
+    }
+
+    .project-link {
+      font-size: 11px;
+      color: black;
+      text-decoration: underline;
+      transition: color 0.3s ease;
+      font-weight: 300;
+    }
+
+    .project-link:hover {
+      color: rgb(2, 254, 23);
+    }
+
+    /* 项目描述 */
+    .project-description {
+      font-size: 11px;
+      color: black;
+      line-height: 1.5;
+      margin-bottom: 40px;
+      font-weight: 300;
+    }
+
+    .project-description p {
+      margin-bottom: 16px;
+    }
+
+    /* 分割线 */
+    .divider {
+      width: 100%;
+      height: 1px;
+      background-color: #ddd;
+      margin: 40px 0;
+    }
+
+    /* 技术说明 */
+    .technical-info {
+      font-size: 11px;
+      color: black;
+      line-height: 1.5;
+      margin-bottom: 40px;
+      font-weight: 300;
+    }
+
+    .technical-info h3 {
+      font-size: 11px;
+      font-weight: 400;
+      margin-bottom: 8px;
+      margin-top: 16px;
+    }
+
+    /* 可玩性说明 */
+    .play-info {
+      font-size: 11px;
+      color: black;
+      line-height: 1.5;
+      margin: 20px auto;
+      font-weight: 300;
+      text-align: left;
+      font-style: italic;
+    }
+
+    /* GIF嵌入 */
+    .gif-embed {
+      width: 100%;
+      max-width: 800px;
+      margin: 40px auto;
+      text-align: center;
+    }
+
+    .gif-embed img {
+      width: 100%;
+      height: auto;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      border: 1px solid #ddd;
+    }
+
+    .gif-embed img.loaded {
+      opacity: 1;
+    }
+
+    /* 图片轮播 */
+    .image-carousel {
+      position: relative;
+      width: 100%;
+      max-width: 800px;
+      margin: 40px auto;
+      text-align: center;
+    }
+
+    .carousel-container {
+      position: relative;
+      overflow: hidden;
+      border-radius: 4px;
+      border: 1px solid #ddd;
+    }
+
+    .carousel-image {
+      width: 100%;
+      height: 400px;
+      object-fit: cover;
+      object-position: center;
+      display: none;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .carousel-image.active {
+      display: block;
+      opacity: 1;
+    }
+
+    .carousel-image.loaded {
+      opacity: 1;
+    }
+
+    .carousel-nav {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(255, 255, 255, 0.8);
+      border: none;
+      font-size: 18px;
+      padding: 10px 15px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    .carousel-nav:hover {
+      background: rgba(255, 255, 255, 1);
+    }
+
+    .carousel-prev {
+      left: 10px;
+    }
+
+    .carousel-next {
+      right: 10px;
+    }
+
+    .carousel-indicator {
+      text-align: center;
+      margin-top: 10px;
+      font-size: 11px;
+      color: #666;
+      font-weight: 300;
+    }
+
+    /* 视频嵌入 */
+    .video-embed {
+      width: 100%;
+      max-width: 800px;
+      margin: 40px auto;
+      aspect-ratio: 16/9;
+    }
+
+    .video-embed iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+
+    /* 响应式设计 */
+    @media (max-width: 900px) {
+      .project-container {
+        padding: 80px 30px 50px 30px;
+      }
+      
+      .project-title {
+        font-size: 15px;
+      }
+      
+      .project-description,
+      .workshop-info {
+        font-size: 10px;
+      }
+      .project-description,
+      .technical-info {
+        font-size: 10px;
+      }
+
+      .project-materials,
+      .project-link {
+        font-size: 10px;
+      }
+
+      .play-info {
+        font-size: 10px;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .project-container {
+        padding: 80px 20px 50px 20px;
+      }
+      
+      .project-title {
+        font-size: 14px;
+      }
+      
+      .workshop-info {
+        font-size: 9px;
+      }
+
+      .project-description,
+      .technical-info {
+        font-size: 9px;
+      }
+
+      .project-materials,
+      .project-link {
+        font-size: 9px;
+      }
+      
+      #top-left {
+        font-size: 32px;
+      }
+      
+      #back-button {
+        font-size: 20px;
+      }
+
+      .play-info {
+        font-size: 9px;
+      }
+
+      .carousel-image {
+        height: 300px;
+      }
+
+      .carousel-nav {
+        font-size: 16px;
+        padding: 8px 12px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- 导航 -->
+  <div id="top-left" onclick="navigateToHome()">Lorca Yu</div>
+  <div id="back-button" onclick="navigateToWork()">← Back to Work</div>
+  
+  <!-- 项目内容 -->
+  <div class="project-container">
+    <!-- 项目标题和信息 -->
+    <div class="project-header">
+      <h1 class="project-title">Claudia (2024)</h1>
+      <div class="project-materials">p5.js, printed zine, 48-hour cloudcover dataset</div>
+    </div>
+
+    <!-- 主图片 -->
+    <img src="../assets/claudia/hero-image.jpg" alt="Claudia" class="hero-image">
+
+    <!-- 轻背景信息 -->
+    <div class="workshop-info">
+      This piece was developed during a creative coding workshop called <em>Invisible Cities</em>, exploring literary architecture, urban history, and speculative design. Participants were invited to imagine cities that do not—or cannot—exist, using generative code and Calvino-inspired prose.
+      <br>
+      <a href="https://www.critlabreview.com/articles/visible-cities" target="_blank" class="project-link">→ View workshop page</a>
+    </div>
+
+    <!-- 项目描述 -->
+    <div class="project-description">
+      <p>Claudia is a city of clouds in the here and now. Her towns are a 48-hour dataset of the clouds over Brooklyn, making her a city simultaneously existing in the past, present, and future. In Claudia, people practice a religion about time, which is considered the god of creation. Each apparition of time, referred to as a "refresh," dramatically changes Claudia's landscape and history. Claudia's territory is defined by the travelers who enter her. A traveler defines the city with their body, with every turn they take, every slope they climb, and every stream they cross sequentially becoming Claudia's new boundaries. Every stop they make becomes a town, named unconsciously on their map. How a traveler shapes Claudia's form is akin to how each look at the sky shapes the form of clouds. Claudia is a product of desire, about how a traveler perceives the world and themselves. Claudia's map is a flattened dictionary, a memoir laid out on a sheet of paper. Claudia is a ruin that is both endless and shapeless, a region that no traveler can truly know or understand. Travelers can only ever walk on the boundaries, for travelers are the boundaries.</p>
+    </div>
+
+    <!-- 分割线 -->
+    <div class="divider"></div>
+
+    <!-- 技术说明 -->
+    <div class="technical-info">
+      <h3>How It Works</h3>
+      <p><strong>1. Initialization:</strong> The code starts by setting up a canvas divided into two sections. The left side displays the image and game elements, while the right side is reserved for displaying words associated with game actions.</p>
+      <p><strong>2. Data Fetching:</strong> It fetches 48-hour cloud cover data of Brooklyn and a list of random words from two separate APIs. These datasets are used to populate interactive elements and display content dynamically as the game progresses.</p>
+      <p><strong>3. Drawing:</strong> The left half of the canvas features an interactive line-drawing game where cloud cover data is represented as points on the image. Players can click these points to select them, and lines are drawn between consecutive points clicked. The right half displays words next to the points as they are clicked, correlating to the sequence of actions on the left.</p>
+
+      <h3>How to Play</h3>
+      <p><strong>- Hover:</strong> When hovering over the left canvas, the code enlarges the pixel under the cursor for a magnified view, which represents the traveler.</p>
+      <p><strong>- Select Points:</strong> Click near the points representing cloud cover on the left side of the canvas. These points are mapped from the cloud cover data fetched from the API.</p>
+      <p><strong>- Draw Lines:</strong> Continue clicking points to draw lines between them, forming connections based on your selection sequence.</p>
+      <p><strong>- View Words:</strong> As you click points, look to the right side of the canvas to see words displayed next to each point. These words come from the random word list fetched from the API.</p>
+      <p><strong>- Save Art:</strong> Press the 'p' key at any point to save your canvas as an image file, capturing your map.</p>
+    </div>
+
+    <!-- 可玩性说明 -->
+    <div class="play-info">
+      This interactive piece can be played on the homepage of this website.
+    </div>
+
+    <!-- GIF嵌入 -->
+    <div class="gif-embed">
+      <img src="../assets/claudia/video.gif" alt="Claudia Demo GIF">
+    </div>
+
+    <!-- 图片轮播 -->
+    <div class="image-carousel">
+      <div class="carousel-container">
+        <img src="../assets/claudia/image1.jpg" alt="Claudia Gallery 1" class="carousel-image active">
+        <img src="../assets/claudia/image2.jpg" alt="Claudia Gallery 2" class="carousel-image">
+        <img src="../assets/claudia/image3.jpg" alt="Claudia Gallery 3" class="carousel-image">
+        <img src="../assets/claudia/image4.jpg" alt="Claudia Gallery 4" class="carousel-image">
+        <img src="../assets/claudia/image5.jpg" alt="Claudia Gallery 5" class="carousel-image">
+        <img src="../assets/claudia/image6.jpg" alt="Claudia Gallery 6" class="carousel-image">
+        <button class="carousel-nav carousel-prev" onclick="previousImage()">‹</button>
+        <button class="carousel-nav carousel-next" onclick="nextImage()">›</button>
+      </div>
+      <div class="carousel-indicator">
+        <span id="current-image">1</span> / 6
+      </div>
+    </div>
+
+    <!-- 视频嵌入 -->
+    <div class="video-embed">
+      <iframe src="https://www.youtube.com/embed/rv4yT8d1HYY" allowfullscreen></iframe>
+    </div>
+  </div>
+
+  <script>
+    let currentImageIndex = 0;
+    const totalImages = 6;
+
+    function navigateToHome() {
+      window.location.href = '../index.html';
+    }
+
+    function navigateToWork() {
+      window.location.href = '../work.html';
+    }
+
+    function showImage(index) {
+      const images = document.querySelectorAll('.carousel-image');
+      images.forEach((img, i) => {
+        img.classList.toggle('active', i === index);
+      });
+      document.getElementById('current-image').textContent = index + 1;
+    }
+
+    function nextImage() {
+      currentImageIndex = (currentImageIndex + 1) % totalImages;
+      showImage(currentImageIndex);
+    }
+
+    function previousImage() {
+      currentImageIndex = (currentImageIndex - 1 + totalImages) % totalImages;
+      showImage(currentImageIndex);
+    }
+
+    // 键盘导航
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'ArrowLeft') {
+        previousImage();
+      } else if (e.key === 'ArrowRight') {
+        nextImage();
+      }
+    });
+
+    document.addEventListener('DOMContentLoaded', function() {
+      const images = document.querySelectorAll('.hero-image, .carousel-image, .gif-embed img');
+      
+      images.forEach(function(img) {
+        if (img.complete) {
+          img.classList.add('loaded');
+        } else {
+          img.addEventListener('load', function() {
+            img.classList.add('loaded');
+          });
+        }
+      });
+    });
+  </script>
+</body>
+</html>

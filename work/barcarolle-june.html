@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Barcarolle: June - Lorca Yu</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap');
+
+    @font-face {
+      font-family: 'DINdong';
+      src: url('../assets/fonts/DINdong.woff2') format('woff2');
+      font-weight: normal;
+      font-style: normal;
+    }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: white;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      min-height: 100vh;
+      line-height: 1.4;
+      font-weight: 300;
+    }
+
+    /* 顶部导航 */
+    #top-left {
+      position: fixed;
+      top: 0px;
+      left: 10px;
+      font-size: 44px;
+      color: black;
+      letter-spacing: 0.05em;
+      z-index: 10;
+      cursor: pointer;
+      transition: color 0.3s ease;
+      font-family: 'DINdong', sans-serif;
+    }
+
+    #top-left:hover {
+      color: rgb(2, 254, 23); 
+    }
+
+    #back-button {
+      position: fixed;
+      top: 10px;
+      right: 10px;
+      font-size: 24px;
+      color: black;
+      cursor: pointer;
+      z-index: 10;
+      transition: color 0.3s ease;
+      font-family: 'DINdong', sans-serif;
+    }
+
+    #back-button:hover {
+      color: rgb(2, 254, 23);
+    }
+
+    /* 项目内容容器 */
+    .project-container {
+      padding: 100px 50px 80px 50px;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    /* 项目标题和信息 */
+    .project-header {
+      margin-bottom: 30px;
+      text-align: left;
+    }
+
+    .project-title {
+      font-size: 16px;
+      color: black;
+      margin-bottom: 4px;
+      line-height: 1.3;
+      font-weight: 400;
+    }
+
+    .project-materials {
+      font-size: 11px;
+      color: black;
+      margin-bottom: 4px;
+      font-style: italic;
+      font-weight: 300;
+    }
+
+    /* 主图片 */
+    .hero-image {
+      width: 100%;
+      max-width: 800px;
+      margin: 0 auto 30px auto;
+      display: block;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      border: 1px solid #ddd;
+    }
+
+    .hero-image.loaded {
+      opacity: 1;
+    }
+
+    /* 项目描述 */
+    .project-description {
+      font-size: 11px;
+      color: black;
+      line-height: 1.5;
+      margin-bottom: 40px;
+      font-weight: 300;
+    }
+
+    .project-description p {
+      margin-bottom: 16px;
+    }
+
+    /* 视频嵌入 */
+    .video-embed {
+      width: 100%;
+      max-width: 800px;
+      margin: 40px auto;
+      aspect-ratio: 16/9;
+    }
+
+    .video-embed iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+
+    /* 响应式设计 */
+    @media (max-width: 900px) {
+      .project-container {
+        padding: 80px 30px 50px 30px;
+      }
+      
+      .project-title {
+        font-size: 15px;
+      }
+      
+      .project-description {
+        font-size: 10px;
+      }
+
+      .project-materials {
+        font-size: 10px;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .project-container {
+        padding: 80px 20px 50px 20px;
+      }
+      
+      .project-title {
+        font-size: 14px;
+      }
+      
+      .project-description {
+        font-size: 9px;
+      }
+
+      .project-materials {
+        font-size: 9px;
+      }
+      
+      #top-left {
+        font-size: 32px;
+      }
+      
+      #back-button {
+        font-size: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- 导航 -->
+  <div id="top-left" onclick="navigateToHome()">Lorca Yu</div>
+  <div id="back-button" onclick="navigateToWork()">← Back to Work</div>
+  
+  <!-- 项目内容 -->
+  <div class="project-container">
+    <!-- 项目标题和信息 -->
+    <div class="project-header">
+      <h1 class="project-title">Barcarolle: June (2024)</h1>
+      <div class="project-materials">projector, voile, air purifier</div>
+    </div>
+
+    <!-- 主图片 -->
+    <img src="../assets/barcarolle-june/hero-image.jpg" alt="Barcarolle: June" class="hero-image">
+
+    <!-- 项目描述 -->
+    <div class="project-description">
+      <p>My favorite piece of Tchaikovsky is "Barcarolle: June" from his <em>The Seasons</em> suite. I started learning the accordion at the age of five, and this was one of the earliest pieces I mastered, as well as one of my earliest memories of Tchaikovsky. The music is filled with a sense of instability, always giving me a drifting, ethereal feeling — like water, like memory. Yet it also brings a sense of security. I often listen to it as I fall asleep, as it makes me imagine being curled up in a cabin during a night voyage. Since coming to US from across the ocean, I always recall the line: "My homeland cannot follow my wishes, and this foreign land cannot ease my fatigue." I increasingly feel as though I can never stand on solid ground, always drifting and swaying on the water. I have no roots, nowhere to belong. There is no place for me on the continents.</p>
+
+      <p>An image of a cherrywood chair with a backrest was projected onto a thin piece of voile, with some wavy folds at the bottom of the fabric, hinting that this is a water-related scene. Beneath the voile, an air purifier was placed to create some fluttering and swaying, adding an element of instability. Then, in rhythm with the music, the sharpness of the chair was adjusted through the projector's focal length, implying the changes in distance. In fact, the chair is the only stable object in the entire installation, yet it remains empty, with no one seated. An identical chair is projected onto the wall behind it, but this one is static, large, solid, and flat — an allegory of continent.</p>
+    </div>
+
+    <!-- 视频嵌入 -->
+    <div class="video-embed">
+      <iframe src="https://www.youtube.com/embed/1fAr4MaoXfk" allowfullscreen></iframe>
+    </div>
+  </div>
+
+  <script>
+    function navigateToHome() {
+      window.location.href = '../index.html';
+    }
+
+    function navigateToWork() {
+      window.location.href = '../work.html';
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+      const images = document.querySelectorAll('.hero-image');
+      
+      images.forEach(function(img) {
+        if (img.complete) {
+          img.classList.add('loaded');
+        } else {
+          img.addEventListener('load', function() {
+            img.classList.add('loaded');
+          });
+        }
+      });
+    });
+  </script>
+</body>
+</html>

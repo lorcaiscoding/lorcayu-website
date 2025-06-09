@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>About - Lorca Yu</title>
+  <style>
+    @font-face {
+      font-family: 'DINdong';
+      src: url('assets/fonts/DINdong.woff2') format('woff2');
+      font-weight: normal;
+      font-style: normal;
+    }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: white;
+      font-family: 'DINdong', sans-serif;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    #top-left {
+      position: absolute;
+      top: 0px;
+      left: 10px;
+      font-size: 44px;
+      color: black;
+      letter-spacing: 0.05em;
+      z-index: 10;
+      cursor: pointer;
+      transition: color 0.3s ease;
+    }
+
+    #top-left:hover {
+      color: rgb(2, 254, 23); 
+    }
+
+    .about-container {
+      display: flex;
+      height: 100vh;
+      align-items: center;
+      padding: 0 50px;
+      gap: 80px;
+    }
+
+    .photo-section {
+      flex: 0 0 380px;
+      align-self: center;
+      margin-top: 0px;
+    }
+
+    .photo-section img {
+      width: 100%;
+      height: 380px;
+      object-fit: cover;
+      border-radius: 0;
+    }
+
+    .content-section {
+      flex: 1;
+      max-width: 600px;
+    }
+
+    .bio-text {
+      font-size: 14px;
+      line-height: 1.6;
+      color: black;
+      margin-bottom: 30px;
+      text-align: justify;
+    }
+
+    .bio-text strong {
+      font-weight: bold;
+    }
+
+    .contact-info {
+      font-size: 14px;
+      line-height: 1.8;
+      color: black;
+    }
+
+    .contact-info a {
+      color: black;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    .contact-info a:hover {
+      color: rgb(2, 254, 23);
+    }
+
+    .contact-info .instagram-link,
+    .contact-info .blog-link {
+      text-decoration: underline;
+    }
+
+    .cv-request {
+      margin-top: 20px;
+      font-size: 14px;
+      color: #666;
+      font-style: italic;
+    }
+  </style>
+</head>
+<body>
+  <div id="top-left" onclick="navigateToHome()">Lorca Yu</div>
+  
+  <div class="about-container">
+    <div class="photo-section">
+      <img src="assets/portrait.JPG" alt="Lorca Yu" />
+    </div>
+    
+    <div class="content-section">
+      <div class="bio-text">
+        <strong>Lorca Qingyang Yu</strong> (b.2000) is a multimedia artist and fabricator based in Brooklyn. With a BA in French Literature from Beijing Foreign Studies University and an MS in Integrated Design & Media from New York University, their practice bridges conceptual inquiry and hands-on making. Their work spans interactive installations, kinetic sculptures, and embedded media systems, often exploring the interplay between technology, environment, and media infrastructures.<br><br>
+        Rooted in the concept of <em>artificial nature</em>, their work reflects on how systems of control and mediation—both technological and infrastructural—redefine our relations to space, perception, and collective experience. Blending physical computing, digital fabrication, and narrative design, they develop precise and materially sensitive approaches that move fluidly between speculative research and functional design.
+      </div>
+      
+      <div class="contact-info">
+        <div><a href="mailto:lorcayuart@gmail.com">lorcayuart@gmail.com</a></div>
+        <div><a href="https://instagram.com/lorcamakes" target="_blank" class="instagram-link">Instagram</a></div>
+        <div><a href="https://medium.com/@lorcayu" target="_blank" class="blog-link">Process Blog</a></div>
+        
+        <div class="cv-request">CV upon request.</div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function navigateToHome() {
+      // Navigate back to homepage
+      window.location.href = 'index.html';
+    }
+  </script>
+</body>
+</html>

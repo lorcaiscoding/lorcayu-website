@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Repair Shop - Lorca Yu</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap');
+
+    @font-face {
+      font-family: 'DINdong';
+      src: url('../assets/fonts/DINdong.woff2') format('woff2');
+      font-weight: normal;
+      font-style: normal;
+    }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: white;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      min-height: 100vh;
+      line-height: 1.4;
+      font-weight: 300;
+    }
+
+    /* 顶部导航 */
+    #top-left {
+      position: fixed;
+      top: 0px;
+      left: 10px;
+      font-size: 44px;
+      color: black;
+      letter-spacing: 0.05em;
+      z-index: 10;
+      cursor: pointer;
+      transition: color 0.3s ease;
+      font-family: 'DINdong', sans-serif;
+    }
+
+    #top-left:hover {
+      color: rgb(2, 254, 23); 
+    }
+
+    #back-button {
+      position: fixed;
+      top: 10px;
+      right: 10px;
+      font-size: 24px;
+      color: black;
+      cursor: pointer;
+      z-index: 10;
+      transition: color 0.3s ease;
+      font-family: 'DINdong', sans-serif;
+    }
+
+    #back-button:hover {
+      color: rgb(2, 254, 23);
+    }
+
+    /* 项目内容容器 */
+    .project-container {
+      padding: 100px 50px 80px 50px;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    /* 项目标题和链接 - 移到主图片前面 */
+    .project-header {
+      margin-bottom: 30px;
+      text-align: left;
+    }
+
+    .project-title {
+      font-size: 16px;
+      color: black;
+      margin-bottom: 4px;
+      line-height: 1.3;
+      font-weight: 400;
+    }
+
+    .project-credits {
+      font-size: 11px;
+      color: black;
+      margin-bottom: 2px;
+      font-style: italic;
+      font-weight: 300;
+    }
+
+    .project-exhibition {
+      font-size: 11px;
+      color: black;
+      margin-bottom: 2px;
+      font-style: italic;
+      font-weight: 300;
+    }
+
+    .project-materials {
+      font-size: 11px;
+      color: black;
+      margin-bottom: 4px;
+      font-style: italic;
+      font-weight: 300;
+    }
+
+    .project-links {
+      margin-top: 20px;
+    }
+
+    .project-link {
+      font-size: 11px;
+      color: black;
+      text-decoration: underline;
+      transition: color 0.3s ease;
+      font-weight: 300;
+      display: block;
+      margin-bottom: 2px;
+    }
+
+    .project-link:hover {
+      color: rgb(2, 254, 23);
+    }
+
+    /* 主图片 */
+    .hero-image {
+      width: 100%;
+      max-width: 800px;
+      margin: 0 auto 30px auto;
+      display: block;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .hero-image.loaded {
+      opacity: 1;
+    }
+
+    /* 项目描述 */
+    .project-description {
+      font-size: 11px;
+      color: black;
+      line-height: 1.5;
+      margin-bottom: 40px;
+      font-weight: 300;
+    }
+
+    .project-description p {
+      margin-bottom: 16px;
+    }
+
+    /* 视频嵌入 */
+    .video-embed {
+      width: 100%;
+      max-width: 800px;
+      margin: 50px auto;
+      aspect-ratio: 16/9;
+    }
+
+    .video-embed video {
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+
+    /* 图片网格 */
+    .image-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 40px;
+      margin-top: 50px;
+    }
+
+    .project-image {
+      width: 100%;
+      max-width: 800px;
+      margin: 0 auto;
+      display: block;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .project-image.loaded {
+      opacity: 1;
+    }
+
+    /* 响应式设计 */
+    @media (max-width: 900px) {
+      .project-container {
+        padding: 80px 30px 50px 30px;
+      }
+      
+      .project-title {
+        font-size: 15px;
+      }
+      
+      .project-description {
+        font-size: 10px;
+      }
+
+      .project-credits,
+      .project-exhibition,
+      .project-materials,
+      .project-link {
+        font-size: 10px;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .project-container {
+        padding: 80px 20px 50px 20px;
+      }
+      
+      .project-title {
+        font-size: 14px;
+      }
+      
+      .project-description {
+        font-size: 9px;
+      }
+
+      .project-credits,
+      .project-exhibition,
+      .project-materials,
+      .project-link {
+        font-size: 9px;
+      }
+      
+      #top-left {
+        font-size: 32px;
+      }
+      
+      #back-button {
+        font-size: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- 导航 -->
+  <div id="top-left" onclick="navigateToHome()">Lorca Yu</div>
+  <div id="back-button" onclick="navigateToWork()">← Back to Work</div>
+  
+  <!-- 项目内容 -->
+  <div class="project-container">
+    <!-- 项目标题和信息 - 现在在主图片前面 -->
+    <div class="project-header">
+      <h1 class="project-title">Repair Shop (2025)</h1>
+      <div class="project-credits">co-developed with Kathleen McDermott (as RA and collaborator)</div>
+      <div class="project-exhibition">exhibited at Open Source Gallery, Brooklyn</div>
+      <div class="project-materials">found appliances, motors, fabric, sensors, microcontrollers, foam, paint</div>
+    </div>
+
+    <!-- 主图片 -->
+    <img src="../assets/repair-shop/hero-image.jpg" alt="Repair Shop" class="hero-image">
+
+    <!-- 项目描述 -->
+    <div class="project-description">
+      <p><em>Repair Shop</em> is a solo exhibition by artist Kathleen McDermott. It turns the gallery into an experimental space for considering the lifespan of objects and when they are assigned "value," especially in the context of work. Encouraging audience engagement and collaboration, <em>Repair Shop</em> evolves over the course of the exhibition.</p>
+
+      <p>One side of the gallery is set up as a showroom, featuring appliances from McDermott's home that can no longer perform their original functions—a sewing machine that doesn't sew well, a blender that leaks motor fluid—but that still have some working parts. Using techniques from puppetry and animatronics, McDermott has made strange, campy attachments for these "broken" machines, expanding on the parts that do work and giving them new use. The bright pink showroom borrows from 1950s advertising tropes of domestic appliances, where machines were described in terms of gendered labor and sold with promises of domestic productivity.</p>
+
+      <p>The other side of the gallery is configured as an absurdist repair shop. Community members are invited to donate formerly precious electronic objects and other heirlooms for "repair." If an object is accepted, the owners acknowledge that its form and function will be significantly altered. In advance of, and throughout the exhibition, McDermott and a rotating group of artist-collaborators rework found and donated objects using paint, fabric, motors, and inflation, transforming them into a cast of animated object "characters" that pose questions around work, value, and the labor of repair.</p>
+
+      <p>I worked closely with McDermott as a collaborator and research assistant throughout the development of <em>Repair Shop</em>. My contributions focused on the design and fabrication of several structural, kinetic, and electronic components for the exhibition—most notably the modified sewing machine and other animated appliances. My work included rapid prototyping, structural modeling, sensor integration, interaction design, painting, sanding, and on-site assembly. These collaborative processes formed an extension of the exhibition's central themes: hybrid labor, value transformation, and the poetics of dysfunctional objects.</p>
+
+      <!-- 外部链接 -->
+      <div class="project-links">
+        <a href="https://open-source-gallery.org/kathleen-mcdermott-repair-shop/" target="_blank" class="project-link">→ View exhibition page</a>
+        <a href="https://www.instagram.com/kit_the_robot?igsh=dW4zNTMyN3M5eTRt" target="_blank" class="project-link">→ More documentation</a>
+      </div>
+    </div>
+
+    <!-- 视频嵌入 -->
+    <div class="video-embed">
+      <video controls loop>
+        <source src="https://open-source-gallery.org/wp-content/uploads/2024/06/RepairShopLoop.mp4?_=1" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+    </div>
+
+    <!-- 更多图片 -->
+    <div class="image-grid">
+      <img src="../assets/repair-shop/image1.jpg" alt="Repair Shop Image 1" class="project-image">
+    </div>
+  </div>
+
+  <script>
+    function navigateToHome() {
+      window.location.href = '../index.html';
+    }
+
+    function navigateToWork() {
+      window.location.href = '../work.html';
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+      const images = document.querySelectorAll('.project-image, .hero-image');
+      
+      images.forEach(function(img) {
+        if (img.complete) {
+          img.classList.add('loaded');
+        } else {
+          img.addEventListener('load', function() {
+            img.classList.add('loaded');
+          });
+        }
+      });
+    });
+  </script>
+</body>
+</html>

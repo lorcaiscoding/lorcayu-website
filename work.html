@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Work - Lorca Yu</title>
+  <style>
+    @font-face {
+      font-family: 'DINdong';
+      src: url('assets/fonts/DINdong.woff2') format('woff2');
+      font-weight: normal;
+      font-style: normal;
+    }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: white;
+      font-family: 'DINdong', sans-serif;
+      min-height: 100vh;
+    }
+
+    #top-left {
+      position: fixed;
+      top: 0px;
+      left: 10px;
+      font-size: 44px;
+      color: black;
+      letter-spacing: 0.05em;
+      z-index: 10;
+      cursor: pointer;
+      transition: color 0.3s ease;
+    }
+
+    #top-left:hover {
+      color: rgb(2, 254, 23); 
+    }
+
+    .work-container {
+      padding: 100px 50px 80px 50px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .work-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 50px;
+      margin-top: 40px;
+    }
+
+    .work-item {
+      display: flex;
+      flex-direction: column;
+      cursor: pointer;
+    }
+
+    .work-image {
+      width: 90%;
+      aspect-ratio: 1;
+      background-color: #f0f0f0;
+      border: none;
+      margin: 0 auto 20px auto;
+      overflow: hidden;
+      transition: transform 0.2s ease;
+    }
+
+    .work-image:hover {
+      transform: scale(1.02);
+    }
+
+    .work-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .work-title {
+      font-size: 16px;
+      color: black;
+      margin-bottom: 8px;
+      line-height: 1.3;
+      text-align: left;
+      width: 90%;
+      margin-left: auto;
+      margin-right: auto;
+      transition: color 0.3s ease;
+    }
+
+    .work-title:hover {
+      color: rgb(2, 254, 23);
+    }
+
+    /* Responsive design */
+    @media (max-width: 1200px) {
+      .work-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    @media (max-width: 900px) {
+      .work-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 30px;
+      }
+      
+      .work-container {
+        padding: 80px 30px 50px 30px;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .work-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .work-container {
+        padding: 80px 20px 50px 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div id="top-left" onclick="navigateToHome()">Lorca Yu</div>
+  
+  <div class="work-container">
+    <div class="work-grid">
+      <!-- Project 1 -->
+      <div class="work-item" onclick="navigateToProject('la-noche-ciclica')">
+        <div class="work-image">
+          <img src="assets/work/A.jpg" alt="La Noche Cíclica" />
+        </div>
+        <div class="work-title">La Noche Cíclica</div>
+      </div>
+
+      <!-- Project 2 -->
+      <div class="work-item" onclick="navigateToProject('and-so-we-dance')">
+        <div class="work-image">
+          <img src="assets/work/B.jpg" alt="And So We Dance" />
+        </div>
+        <div class="work-title">And So We Dance</div>
+      </div>
+
+      <!-- Project 3 -->
+      <div class="work-item" onclick="navigateToProject('repair-shop')">
+        <div class="work-image">
+          <img src="assets/work/C.jpg" alt="Repair Shop" />
+        </div>
+        <div class="work-title">Repair Shop</div>
+      </div>
+
+      <!-- Project 4 -->
+      <div class="work-item" onclick="navigateToProject('how-it-slips')">
+        <div class="work-image">
+          <img src="assets/work/D.jpg" alt="How it Slips" />
+        </div>
+        <div class="work-title">How it Slips</div>
+      </div>
+
+      <!-- Project 5 -->
+      <div class="work-item" onclick="navigateToProject('lami-intime')">
+        <div class="work-image">
+          <img src="assets/work/E.jpg" alt="L'ami intime" />
+        </div>
+        <div class="work-title">L'ami intime</div>
+      </div>
+
+      <!-- Project 6 -->
+      <div class="work-item" onclick="navigateToProject('claudia')">
+        <div class="work-image">
+          <img src="assets/work/F.jpg" alt="Claudia" />
+        </div>
+        <div class="work-title">Claudia</div>
+      </div>
+
+      <!-- Project 7 -->
+      <div class="work-item" onclick="navigateToProject('the-marvelous-clouds')">
+        <div class="work-image">
+          <img src="assets/work/G.jpg" alt="The Marvelous Clouds" />
+        </div>
+        <div class="work-title">The Marvelous Clouds</div>
+      </div>
+
+      <!-- Project 8 -->
+      <div class="work-item" onclick="navigateToProject('all-the-rivers-sound-in-my-body')">
+        <div class="work-image">
+          <img src="assets/work/H.jpg" alt="All the Rivers Sound in My Body" />
+        </div>
+        <div class="work-title">All the Rivers Sound in My Body</div>
+      </div>
+
+      <!-- Project 9 -->
+      <div class="work-item" onclick="navigateToProject('barcarolle-june')">
+        <div class="work-image">
+          <img src="assets/work/I.jpg" alt="Barcarolle: June" />
+        </div>
+        <div class="work-title">Barcarolle: June</div>
+      </div>
+
+      <!-- Project 10 -->
+      <div class="work-item" onclick="navigateToProject('god-is-a-woman-sitting-in-the-bath')">
+        <div class="work-image">
+          <img src="assets/work/J.jpg" alt="God Is a Woman Sitting in the Bath" />
+        </div>
+        <div class="work-title">God Is a Woman Sitting in the Bath</div>
+      </div>
+
+      <!-- Project 11 -->
+      <div class="work-item" onclick="navigateToProject('chungking-express')">
+        <div class="work-image">
+          <img src="assets/work/K.jpg" alt="Chungking Express" />
+        </div>
+        <div class="work-title">Chungking Express</div>
+      </div>
+
+      <!-- Project 12 -->
+      <div class="work-item" onclick="navigateToProject('do-not-feed-alligators')">
+        <div class="work-image">
+          <img src="assets/work/L.jpg" alt="Do Not Feed Alligators" />
+        </div>
+        <div class="work-title">Do Not Feed Alligators</div>
+      </div>
+
+      <!-- Project 13 -->
+      <div class="work-item" onclick="navigateToProject('i-really-like-your-work')">
+        <div class="work-image">
+          <img src="assets/work/M.jpg" alt="I Really Like Your Work" />
+        </div>
+        <div class="work-title">I Really Like Your Work</div>
+      </div>
+
+      <!-- Project 14 -->
+      <div class="work-item" onclick="navigateToProject('seagull-untitled-acquired')">
+        <div class="work-image">
+          <img src="assets/work/N.jpg" alt="Seagull, Untitled (Acquired)" />
+        </div>
+        <div class="work-title">Seagull, Untitled (Acquired)</div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function navigateToHome() {
+      window.location.href = 'index.html';
+    }
+
+    function navigateToProject(projectId) {
+      window.location.href = `work/${projectId}.html`;
+    }
+  </script>
+</body>
+</html>

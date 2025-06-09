@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Sky Game (Vanilla JS)</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <canvas id="gameCanvas"></canvas>
+  <div class="blur-overlay"></div>
+  <div id="top-left" onclick="navigateToHome()">Lorca Yu</div>
+  <div id="top-right"><span id="clock"></span></div>
+  <div id="bottom-right">
+    <div id="catalog-title">Catalog</div>
+    <div id="catalog-list">
+      <div onclick="navigateToWork()">01. Work</div>
+      <div onclick="navigateToAbout()">02. About</div>
+    </div>
+  </div>
+  <script src="game.js"></script>
+  <script>
+    function updateTime() {
+      const clock = document.getElementById('clock');
+      const now = new Date();
+      let hours = now.getHours();
+      const m = String(now.getMinutes()).padStart(2, '0');
+      const s = String(now.getSeconds()).padStart(2, '0');
+      
+      const period = hours >= 12 ? 'PM' : 'AM';
+  
+      hours = hours % 12;
+      if (hours === 0) hours = 12;
+  
+      const h = String(hours).padStart(2, '0');
+      
+      clock.textContent = `${h}:${m}:${s} ${period}`;
+    }
+    setInterval(updateTime, 1000);
+    updateTime();
+
+    // 导航函数
+    function navigateToHome() {
+      // 这里可以跳转到首页或刷新页面
+      console.log('Navigate to Home');
+      // 例如：window.location.href = 'index.html';
+      // 或者：location.reload();
+    }
+
+    function navigateToWork() {
+      window.location.href = 'work.html';
+    }
+
+    function navigateToAbout() {
+      window.location.href = 'about.html';
+    }
+  </script>
+</body>
+</html>

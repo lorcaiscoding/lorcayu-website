@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>I really like your work - Lorca Yu</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap');
+
+    @font-face {
+      font-family: 'DINdong';
+      src: url('../assets/fonts/DINdong.woff2') format('woff2');
+      font-weight: normal;
+      font-style: normal;
+    }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: white;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      min-height: 100vh;
+      line-height: 1.4;
+      font-weight: 300;
+    }
+
+    /* 顶部导航 */
+    #top-left {
+      position: fixed;
+      top: 0px;
+      left: 10px;
+      font-size: 44px;
+      color: black;
+      letter-spacing: 0.05em;
+      z-index: 10;
+      cursor: pointer;
+      transition: color 0.3s ease;
+      font-family: 'DINdong', sans-serif;
+    }
+
+    #top-left:hover {
+      color: rgb(2, 254, 23); 
+    }
+
+    #back-button {
+      position: fixed;
+      top: 10px;
+      right: 10px;
+      font-size: 24px;
+      color: black;
+      cursor: pointer;
+      z-index: 10;
+      transition: color 0.3s ease;
+      font-family: 'DINdong', sans-serif;
+    }
+
+    #back-button:hover {
+      color: rgb(2, 254, 23);
+    }
+
+    /* 项目内容容器 */
+    .project-container {
+      padding: 100px 50px 80px 50px;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    /* 项目标题和信息 */
+    .project-header {
+      margin-bottom: 30px;
+      text-align: left;
+    }
+
+    .project-title {
+      font-size: 16px;
+      color: black;
+      margin-bottom: 4px;
+      line-height: 1.3;
+      font-weight: 400;
+    }
+
+    .project-materials {
+      font-size: 11px;
+      color: black;
+      margin-bottom: 4px;
+      font-style: italic;
+      font-weight: 300;
+    }
+
+    /* 主图片 */
+    .hero-image {
+      width: 100%;
+      max-width: 800px;
+      margin: 0 auto 30px auto;
+      display: block;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .hero-image.loaded {
+      opacity: 1;
+    }
+
+    /* 项目描述 */
+    .project-description {
+      font-size: 11px;
+      color: black;
+      line-height: 1.5;
+      margin-bottom: 40px;
+      font-weight: 300;
+    }
+
+    .project-description p {
+      margin-bottom: 16px;
+    }
+
+    /* 视频嵌入 */
+    .video-embed {
+      width: 100%;
+      max-width: 800px;
+      margin: 40px auto;
+      text-align: center;
+    }
+
+    .video-embed iframe {
+      width: 100%;
+      height: 450px;
+      border: none;
+      border-radius: 0;
+    }
+
+    /* 图片网格 */
+    .image-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 40px;
+      margin-top: 50px;
+    }
+
+    .project-image {
+      width: 100%;
+      max-width: 800px;
+      margin: 0 auto;
+      display: block;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .project-image.loaded {
+      opacity: 1;
+    }
+
+    /* 响应式设计 */
+    @media (max-width: 900px) {
+      .project-container {
+        padding: 80px 30px 50px 30px;
+      }
+      
+      .project-title {
+        font-size: 15px;
+      }
+      
+      .project-description {
+        font-size: 10px;
+      }
+
+      .project-materials {
+        font-size: 10px;
+      }
+
+      .video-embed iframe {
+        height: 315px;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .project-container {
+        padding: 80px 20px 50px 20px;
+      }
+      
+      .project-title {
+        font-size: 14px;
+      }
+      
+      .project-description {
+        font-size: 9px;
+      }
+
+      .project-materials {
+        font-size: 9px;
+      }
+      
+      #top-left {
+        font-size: 32px;
+      }
+      
+      #back-button {
+        font-size: 20px;
+      }
+
+      .video-embed iframe {
+        height: 200px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- 导航 -->
+  <div id="top-left" onclick="navigateToHome()">Lorca Yu</div>
+  <div id="back-button" onclick="navigateToWork()">← Back to Work</div>
+  
+  <!-- 项目内容 -->
+  <div class="project-container">
+    <!-- 项目标题和信息 -->
+    <div class="project-header">
+      <h1 class="project-title">I really like your work (2024)</h1>
+      <div class="project-materials">PLA 3D print, clear resin 3D print, microcontroller, sound module, tactile push button</div>
+    </div>
+
+    <!-- 主图片 -->
+    <img src="../assets/i-really-like-your-work/hero-image.jpg" alt="I really like your work" class="hero-image">
+
+    <!-- 项目描述 -->
+    <div class="project-description">
+      <p>This piece is designed for showcases and exhibitions. At every showcase I've participated in, the phrase I've heard the most is "I really like your work," whether sincere or not. When my work is displayed, people say this to me; and when I visit others' works, I say the same to them. I'm quite fed up with it. Sometimes, I might not even like the piece that much, but I still say it. I think it's the same when others say it to me. So why not create a machine to say this insincere nonsense on our behalf? Just like when you walk into a store, the automatic doorbell greets you with a "Welcome," even though the staff don't really care about your arrival, but something has to be said in that moment.</p>
+
+      <p>I chose the form of a Harpy because, in Greek mythology, they're considered annoying creatures. I also made the whole machine resemble a parrot and its birdcage because parrots love to repeat things they don't even understand, so let it say this phrase endlessly in a vacuum cage. I also gave it a hypocritical gentleman's head because, in my mind, it is the closest representation of the façade of the art market.</p>
+
+      <p>The next time you see me at a showcase with this machine, I want you to know that if I truly like a piece of work, I'll say "I really like your work" in person.</p>
+    </div>
+
+    <!-- 视频嵌入 -->
+    <div class="video-embed">
+      <iframe src="https://www.youtube.com/embed/5ElN-zcXt3E?si=VE0AWDXIsSZIyaX4" title="I really like your work" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+    </div>
+
+    <!-- 更多图片 -->
+    <div class="image-grid">
+      <img src="../assets/i-really-like-your-work/image1.jpg" alt="I really like your work Image 1" class="project-image">
+      <img src="../assets/i-really-like-your-work/image2.jpg" alt="I really like your work Image 2" class="project-image">
+    </div>
+  </div>
+
+  <script>
+    function navigateToHome() {
+      window.location.href = '../index.html';
+    }
+
+    function navigateToWork() {
+      window.location.href = '../work.html';
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+      const images = document.querySelectorAll('.hero-image, .project-image');
+      
+      images.forEach(function(img) {
+        if (img.complete) {
+          img.classList.add('loaded');
+        } else {
+          img.addEventListener('load', function() {
+            img.classList.add('loaded');
+          });
+        }
+      });
+    });
+  </script>
+</body>
+</html>

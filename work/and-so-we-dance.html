@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>And So We Dance - Lorca Yu</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap');
+
+    @font-face {
+      font-family: 'DINdong';
+      src: url('../assets/fonts/DINdong.woff2') format('woff2');
+      font-weight: normal;
+      font-style: normal;
+    }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: white;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      min-height: 100vh;
+      line-height: 1.4;
+      font-weight: 300;
+    }
+
+    /* 顶部导航 */
+    #top-left {
+      position: fixed;
+      top: 0px;
+      left: 10px;
+      font-size: 44px;
+      color: black;
+      letter-spacing: 0.05em;
+      z-index: 10;
+      cursor: pointer;
+      transition: color 0.3s ease;
+      font-family: 'DINdong', sans-serif;
+    }
+
+    #top-left:hover {
+      color: rgb(2, 254, 23); 
+    }
+
+    #back-button {
+      position: fixed;
+      top: 10px;
+      right: 10px;
+      font-size: 24px;
+      color: black;
+      cursor: pointer;
+      z-index: 10;
+      transition: color 0.3s ease;
+      font-family: 'DINdong', sans-serif;
+    }
+
+    #back-button:hover {
+      color: rgb(2, 254, 23);
+    }
+
+    /* 项目内容容器 */
+    .project-container {
+      padding: 100px 50px 80px 50px;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    /* 项目标题和链接 - 移到主图片前面 */
+    .project-header {
+      margin-bottom: 30px;
+      text-align: left;
+    }
+
+    .project-title {
+      font-size: 16px;
+      color: black;
+      margin-bottom: 4px;
+      line-height: 1.3;
+      font-weight: 400;
+    }
+
+    .project-materials {
+      font-size: 11px;
+      color: black;
+      margin-bottom: 4px;
+      font-style: italic;
+      font-weight: 300;
+    }
+
+    /* 主图片 */
+    .hero-image {
+      width: 100%;
+      max-width: 800px;
+      margin: 0 auto 30px auto;
+      display: block;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .hero-image.loaded {
+      opacity: 1;
+    }
+
+    /* 项目描述 */
+    .project-description {
+      font-size: 11px;
+      color: black;
+      line-height: 1.5;
+      margin-bottom: 40px;
+      font-weight: 300;
+    }
+
+    .project-description p {
+      margin-bottom: 16px;
+    }
+
+    /* 视频嵌入 */
+    .video-embed {
+      width: 100%;
+      max-width: 800px;
+      margin: 50px auto;
+      aspect-ratio: 16/9;
+    }
+
+    .video-embed iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+
+    /* 图片网格 */
+    .image-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 40px;
+      margin-top: 50px;
+    }
+
+    .project-image {
+      width: 100%;
+      max-width: 800px;
+      margin: 0 auto;
+      display: block;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .project-image.loaded {
+      opacity: 1;
+    }
+
+    /* 响应式设计 */
+    @media (max-width: 900px) {
+      .project-container {
+        padding: 80px 30px 50px 30px;
+      }
+      
+      .project-title {
+        font-size: 15px;
+      }
+      
+      .project-description {
+        font-size: 10px;
+      }
+
+      .project-materials {
+        font-size: 10px;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .project-container {
+        padding: 80px 20px 50px 20px;
+      }
+      
+      .project-title {
+        font-size: 14px;
+      }
+      
+      .project-description {
+        font-size: 9px;
+      }
+
+      .project-materials {
+        font-size: 9px;
+      }
+      
+      #top-left {
+        font-size: 32px;
+      }
+      
+      #back-button {
+        font-size: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- 导航 -->
+  <div id="top-left" onclick="navigateToHome()">Lorca Yu</div>
+  <div id="back-button" onclick="navigateToWork()">← Back to Work</div>
+  
+  <!-- 项目内容 -->
+  <div class="project-container">
+    <!-- 项目标题和材料 - 现在在主图片前面 -->
+    <div class="project-header">
+      <h1 class="project-title">And So We Dance (2024)</h1>
+      <div class="project-materials">acrylic sheets, soap, arduino, projector, mini OLED screen, coin acceptor module</div>
+    </div>
+
+    <!-- 主图片 -->
+    <img src="../assets/and-so-we-dance/hero-image.jpg" alt="And So We Dance" class="hero-image">
+
+    <!-- 项目描述 -->
+    <div class="project-description">
+      <p>On the first day of IDM, I asked my professor a question: "How do artists make a living?" She answered me that she still didn't have an answer to this question, because her LinkedIn profile picture still says "Open to work." Over the past year and a half at IDM, I have been repeatedly thinking about the same question: after graduation, should I continue making art? And if so, how? There are too many things to weigh and compromise on—money, legal status, work-life balance. And now, with only six months left before graduation, I still don't have an answer.</p>
+
+      <p>With these uncertainties, I created <em>And So We Dance</em>, a piece inspired by <em>The Ant and the Grasshopper</em> in Aesop's Fables. It is not only meant to explore the survival dilemmas of immigrant artists but also to touch upon a more universal question: how does one define a "valuable life" within the framework of capitalism? Capitalism tightly binds value to production, granting meaning only to labor deemed "useful." In this installation, the action of inserting a quarter dollar becomes a ritual symbolizing the value exchange relationship in capitalism. Meanwhile, the dance of the grasshoppers reflects the "uselessness" of artistic creation—it has no productive purpose and is excluded from the system of value. Yet, it is precisely this "uselessness" that reveals the true meaning of art: it transcends the productive logic defined by capitalism, which, in reality, artists often find themselves bound to, creating the very source of their dilemma.</p>
+
+      <p>The amber formed by the soap and grasshoppers carries another layer of metaphor. Capitalism emphasizes immediacy in production, while amber suggests solidification and eternity; this challenges the dominant logic of "efficiency" and "utility," urging us to reevaluate those "useless" things. The faintly visible text on the screen is quoted from the original Aesop's Fable. It was originally the ants' admonishment to the grasshopper, but here it takes on a more ironic meaning—do we really need to prepare for "winter" at all times? Or is the true value of art found precisely in ignoring and resisting "winter"? The faint visibility of the text symbolizes the elusive nature of "value"—are we willing to accept a value system that is not centered on production and utility? Do we truly understand what a "meaningful life" is? After all, if there were no winter to prepare for, the grasshopper would not suffer retribution, and the ants would not have their paltry victory.</p>
+    </div>
+
+    <!-- 视频嵌入 -->
+    <div class="video-embed">
+      <iframe src="https://www.youtube.com/embed/6QnkZWaewLs" allowfullscreen></iframe>
+    </div>
+
+    <!-- 更多图片 -->
+    <div class="image-grid">
+      <img src="../assets/and-so-we-dance/image1.jpg" alt="And So We Dance Image 1" class="project-image">
+      <img src="../assets/and-so-we-dance/image2.jpg" alt="And So We Dance Image 2" class="project-image">
+      <img src="../assets/and-so-we-dance/image3.jpg" alt="And So We Dance Image 3" class="project-image">
+    </div>
+  </div>
+
+  <script>
+    function navigateToHome() {
+      window.location.href = '../index.html';
+    }
+
+    function navigateToWork() {
+      window.location.href = '../work.html';
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+      const images = document.querySelectorAll('.project-image, .hero-image');
+      
+      images.forEach(function(img) {
+        if (img.complete) {
+          img.classList.add('loaded');
+        } else {
+          img.addEventListener('load', function() {
+            img.classList.add('loaded');
+          });
+        }
+      });
+    });
+  </script>
+</body>
+</html>

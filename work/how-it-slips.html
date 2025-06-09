@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>How it Slips - Lorca Yu</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap');
+
+    @font-face {
+      font-family: 'DINdong';
+      src: url('../assets/fonts/DINdong.woff2') format('woff2');
+      font-weight: normal;
+      font-style: normal;
+    }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: white;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      min-height: 100vh;
+      line-height: 1.4;
+      font-weight: 300;
+    }
+
+    /* 顶部导航 */
+    #top-left {
+      position: fixed;
+      top: 0px;
+      left: 10px;
+      font-size: 44px;
+      color: black;
+      letter-spacing: 0.05em;
+      z-index: 10;
+      cursor: pointer;
+      transition: color 0.3s ease;
+      font-family: 'DINdong', sans-serif;
+    }
+
+    #top-left:hover {
+      color: rgb(2, 254, 23); 
+    }
+
+    #back-button {
+      position: fixed;
+      top: 10px;
+      right: 10px;
+      font-size: 24px;
+      color: black;
+      cursor: pointer;
+      z-index: 10;
+      transition: color 0.3s ease;
+      font-family: 'DINdong', sans-serif;
+    }
+
+    #back-button:hover {
+      color: rgb(2, 254, 23);
+    }
+
+    /* 项目内容容器 */
+    .project-container {
+      padding: 100px 50px 80px 50px;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    /* 项目标题和信息 */
+    .project-header {
+      margin-bottom: 30px;
+      text-align: left;
+    }
+
+    .project-title {
+      font-size: 16px;
+      color: black;
+      margin-bottom: 4px;
+      line-height: 1.3;
+      font-weight: 400;
+    }
+
+    .project-credits {
+      font-size: 11px;
+      color: black;
+      margin-bottom: 2px;
+      font-weight: 300;
+      font-style: italic;
+    }
+
+    .project-exhibition {
+      font-size: 11px;
+      color: black;
+      margin-bottom: 2px;
+      font-style: italic;
+      font-weight: 300;
+    }
+
+    .project-materials {
+      font-size: 11px;
+      color: black;
+      margin-bottom: 4px;
+      font-style: italic;
+      font-weight: 300;
+    }
+
+    /* 主图片 */
+    .hero-image {
+      width: 100%;
+      max-width: 800px;
+      margin: 0 auto 30px auto;
+      display: block;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .hero-image.loaded {
+      opacity: 1;
+    }
+
+    /* 项目描述 */
+    .project-description {
+      font-size: 11px;
+      color: black;
+      line-height: 1.5;
+      margin-bottom: 20px;
+      font-weight: 300;
+    }
+
+    .project-description p {
+      margin-bottom: 16px;
+    }
+
+    /* 赞助信息 */
+    .sponsorship-info {
+      font-size: 11px;
+      color: black;
+      line-height: 1.5;
+      margin-bottom: 40px;
+      font-weight: 300;
+    }
+
+    /* GIF/视频嵌入 */
+    .gif-embed {
+      width: 100%;
+      max-width: 800px;
+      margin: 50px auto;
+      text-align: center;
+    }
+
+    .gif-embed img {
+      width: 100%;
+      height: auto;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .gif-embed img.loaded {
+      opacity: 1;
+    }
+
+    /* 图片网格 */
+    .image-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 40px;
+      margin-top: 50px;
+    }
+
+    .project-image {
+      width: 100%;
+      max-width: 800px;
+      margin: 0 auto;
+      display: block;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .project-image.loaded {
+      opacity: 1;
+    }
+
+    /* 外部链接 */
+    .project-links {
+      margin-top: 20px;
+    }
+
+    .project-link {
+      font-size: 11px;
+      color: black;
+      text-decoration: underline;
+      transition: color 0.3s ease;
+      font-weight: 300;
+      display: block;
+      margin-bottom: 2px;
+    }
+
+    .project-link:hover {
+      color: rgb(2, 254, 23);
+    }
+
+    /* 响应式设计 */
+    @media (max-width: 900px) {
+      .project-container {
+        padding: 80px 30px 50px 30px;
+      }
+      
+      .project-title {
+        font-size: 15px;
+      }
+      
+      .project-description {
+        font-size: 10px;
+      }
+
+      .project-credits,
+      .project-exhibition,
+      .project-materials,
+      .project-link {
+        font-size: 10px;
+      }
+
+      .sponsorship-info {
+        font-size: 10px;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .project-container {
+        padding: 80px 20px 50px 20px;
+      }
+      
+      .project-title {
+        font-size: 14px;
+      }
+      
+      .project-description {
+        font-size: 9px;
+      }
+
+      .project-credits,
+      .project-exhibition,
+      .project-materials,
+      .project-link {
+        font-size: 9px;
+      }
+
+      .sponsorship-info {
+        font-size: 9px;
+      }
+      
+      #top-left {
+        font-size: 32px;
+      }
+      
+      #back-button {
+        font-size: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- 导航 -->
+  <div id="top-left" onclick="navigateToHome()">Lorca Yu</div>
+  <div id="back-button" onclick="navigateToWork()">← Back to Work</div>
+  
+  <!-- 项目内容 -->
+  <div class="project-container">
+    <!-- 项目标题和信息 -->
+    <div class="project-header">
+      <h1 class="project-title">How it Slips (2025)</h1>
+      <div class="project-credits">fabrication support for Kathleen McDermott & Monica Duncan</div>
+      <div class="project-exhibition">exhibited as public performance in Fort Greene Park</div>
+      <div class="project-materials">LEDs, diffusion fabric, custom neoprene jackets</div>
+    </div>
+
+    <!-- 主图片 -->
+    <img src="../assets/how-it-slips/hero-image.jpg" alt="How it Slips" class="hero-image">
+
+    <!-- 项目描述 -->
+    <div class="project-description">
+      <p><em>How it Slips</em> is an interventionist performance in public space exploring femme and queer bodies in HYPER visibility and in obfuscation.</p>
+
+      <p>The performers re-shape their bodies with light––they radiate in multiplicity as flasher, fire-fly, street light, flashlight, comic trope, queer camouflage. Light as a protective coat.</p>
+
+      <p><em>How it Slips</em> invites the audience to consider––what do they conceal of themselves in public space, and what do they let slip? How do they signal, how do they ask to be seen? How do they direct our attention, and what do they highlight? Light as urban camouflage––we hide in plain sight.</p>
+
+      <p>As part of the fabrication team, I contributed fabrication support to the wearable components of the piece, assisting in the construction and refinement of light-integrated costumes. This included material testing, structural assembly, and detail work in the realization of the soft, glowing forms that defined the performance's shifting visibility.</p>
+    </div>
+
+    <!-- 赞助信息 -->
+    <div class="sponsorship-info">
+      <p><em>How it Slips</em> is sponsored, in part, by the Greater New York Arts Development Fund of the New York City Department of Cultural Affairs, administered by Brooklyn Arts Council (BAC), PSC-CUNY Award, jointly funded by The Professional Staff Congress and The City University of New York, with additional support from NYU Tandon School of Engineering, Integrated Design & Media. NYC Parks permit #829396</p>
+
+      <!-- 外部链接 -->
+      <div class="project-links">
+        <a href="https://howitslips.com/gallery-page-description-and-grid/" target="_blank" class="project-link">→ View performance page</a>
+        <a href="https://www.kthartic.com/index.php/wearables/how-it-slips/" target="_blank" class="project-link">→ More documentation</a>
+      </div>
+    </div>
+
+    <!-- GIF嵌入 -->
+    <div class="gif-embed">
+      <img src="../assets/how-it-slips/performance.gif" alt="How it Slips Performance GIF">
+    </div>
+
+    <!-- 更多图片 -->
+    <div class="image-grid">
+      <img src="../assets/how-it-slips/image1.jpg" alt="How it Slips Image 1" class="project-image">
+      <img src="../assets/how-it-slips/image2.jpg" alt="How it Slips Image 2" class="project-image">
+      <img src="../assets/how-it-slips/image3.jpg" alt="How it Slips Image 3" class="project-image">
+      <img src="../assets/how-it-slips/image4.jpg" alt="How it Slips Image 4" class="project-image">
+    </div>
+  </div>
+
+  <script>
+    function navigateToHome() {
+      window.location.href = '../index.html';
+    }
+
+    function navigateToWork() {
+      window.location.href = '../work.html';
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+      const images = document.querySelectorAll('.project-image, .hero-image, .gif-embed img');
+      
+      images.forEach(function(img) {
+        if (img.complete) {
+          img.classList.add('loaded');
+        } else {
+          img.addEventListener('load', function() {
+            img.classList.add('loaded');
+          });
+        }
+      });
+    });
+  </script>
+</body>
+</html>
