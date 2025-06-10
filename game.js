@@ -38,42 +38,9 @@ const dpr = window.devicePixelRatio || 1;
 let isImageLoaded = false;
 let isDataLoaded = false;
 
-// 新增：检测是否为移动设备
+// 检测是否为移动设备
 function isMobile() {
   return window.innerWidth <= 768;
-}
-
-// 新增：获取布局参数
-function getLayoutParams() {
-  const isMobileLayout = isMobile();
-  const screenWidth = window.innerWidth;
-  const screenHeight = window.innerHeight;
-  
-  if (isMobileLayout) {
-    // 手机版：上下分屏
-    return {
-      topPanelW: screenWidth,
-      topPanelH: screenHeight / 2,
-      bottomPanelW: screenWidth,
-      bottomPanelH: screenHeight / 2,
-      topPanelX: 0,
-      topPanelY: 0,
-      bottomPanelX: 0,
-      bottomPanelY: screenHeight / 2
-    };
-  } else {
-    // 电脑版：左右分屏
-    return {
-      topPanelW: screenWidth / 2,
-      topPanelH: screenHeight,
-      bottomPanelW: screenWidth / 2,
-      bottomPanelH: screenHeight,
-      topPanelX: 0,
-      topPanelY: 0,
-      bottomPanelX: screenWidth / 2,
-      bottomPanelY: 0
-    };
-  }
 }
 
 function resize() {
@@ -144,44 +111,76 @@ canvas.addEventListener('mousedown', (e) => {
   const mx = e.clientX - rect.left;
   const my = e.clientY - rect.top;
   
-  const layout = getLayoutParams();
-  const isMobileLayout = isMobile();
+  // 移动端：上下分割，桌面端：左右分割
+  const isMobileDevice = isMobile();
+  const panelW = isMobileDevice ? window.innerWidth : window.innerWidth / 2;
+  const panelH = isMobileDevice ? window.innerHeight / 2 : window.innerHeight;
 
-  // 修改：根据设备类型调整点击区域判断
-  const isInTopPanel = isMobileLayout ? 
-    (my <= layout.topPanelH) : 
-    (mx <= layout.topPanelW);
+  // 移动端和桌面端的点击逻辑
+  if (isMobileDevice) {
+    // 移动端：上半部分点击逻辑
+    if (my <= panelH && cloudcover.length > 0) {
+      for (let i = 0; i < cloudcover.length; i++) {
+        let x = map(i, 0, cloudcover.length - 1, 50, panelW - 50);
+        let y = map(cloudcover[i], 0, 100, panelH - 50, 50);
 
-  // 上半部分（手机）或左半部分（电脑）点击逻辑
-  if (isInTopPanel && cloudcover.length > 0) {
-    for (let i = 0; i < cloudcover.length; i++) {
-      let x = map(i, 0, cloudcover.length - 1, 50, layout.topPanelW - 50);
-      let y = map(cloudcover[i], 0, 100, layout.topPanelH - 50, 50);
+        const d = Math.hypot(mx - x, my - y);
+        if (d < 5) {
+          clickedCircles.push({ x, y });
 
-      const d = Math.hypot(mx - x, my - y);
-      if (d < 5) {
-        clickedCircles.push({ x, y });
+          if (clickedCircles.length > 1) {
+            const last = clickedCircles[clickedCircles.length - 2];
+            lines.push({ x1: last.x, y1: last.y, x2: x, y2: y });
+          }
 
-        if (clickedCircles.length > 1) {
-          const last = clickedCircles[clickedCircles.length - 2];
-          lines.push({ x1: last.x, y1: last.y, x2: x, y2: y });
+          if (clickedCircles.length === 1) {
+            document.getElementById('bottom-right').style.opacity = '0.4';
+          }
+          break;
         }
-
-        // 新增：智能隐藏传统导航
-        if (clickedCircles.length === 1) {
-          document.getElementById('bottom-right').style.opacity = '0.4';
-        }
-        break;
       }
     }
-  }
-  // 下半部分（手机）或右半部分（电脑）点击检测
-  else if (!isInTopPanel) {
-    for (let area of projectClickAreas) {
-      if (mx >= area.x && mx <= area.x + area.width && 
-          my >= area.y - area.height && my <= area.y + 5) {
-        window.location.href = area.url;
-        break;
+    // 移动端：下半部分点击检测（项目名称点击）
+    else if (my > panelH) {
+      for (let area of projectClickAreas) {
+        if (mx >= area.x && mx <= area.x + area.width && 
+            my >= area.y - area.height && my <= area.y + 5) {
+          window.location.href = area.url;
+          break;
+        }
+      }
+    }
+  } else {
+    // 桌面端：保持原有的左右分割逻辑
+    if (mx <= panelW && cloudcover.length > 0) {
+      for (let i = 0; i < cloudcover.length; i++) {
+        let x = map(i, 0, cloudcover.length - 1, 50, panelW - 50);
+        let y = map(cloudcover[i], 0, 100, panelH - 50, 50);
+
+        const d = Math.hypot(mx - x, my - y);
+        if (d < 5) {
+          clickedCircles.push({ x, y });
+
+          if (clickedCircles.length > 1) {
+            const last = clickedCircles[clickedCircles.length - 2];
+            lines.push({ x1: last.x, y1: last.y, x2: x, y2: y });
+          }
+
+          if (clickedCircles.length === 1) {
+            document.getElementById('bottom-right').style.opacity = '0.4';
+          }
+          break;
+        }
+      }
+    }
+    // 桌面端：右侧点击检测（项目名称点击）
+    else if (mx > panelW) {
+      for (let area of projectClickAreas) {
+        if (mx >= area.x && mx <= area.x + area.width && 
+            my >= area.y - area.height && my <= area.y + 5) {
+          window.location.href = area.url;
+          break;
+        }
       }
     }
   }
@@ -189,25 +188,32 @@ canvas.addEventListener('mousedown', (e) => {
 
 canvas.addEventListener('mousemove', (e) => {
   const rect = canvas.getBoundingClientRect();
+  const isMobileDevice = isMobile();
+  const panelW = isMobileDevice ? window.innerWidth : window.innerWidth / 2;
+  const panelH = isMobileDevice ? window.innerHeight / 2 : window.innerHeight;
   const mx = e.clientX - rect.left;
   const my = e.clientY - rect.top;
-  
-  const layout = getLayoutParams();
-  const isMobileLayout = isMobile();
 
-  const isInTopPanel = isMobileLayout ? 
-    (my <= layout.topPanelH) : 
-    (mx <= layout.topPanelW);
-
-  if (isInTopPanel) {
-    hoverX = Math.floor(mx / pixelSize) * pixelSize;
-    hoverY = Math.floor(my / pixelSize) * pixelSize;
+  // 移动端和桌面端的悬停逻辑
+  if (isMobileDevice) {
+    if (mx < panelW && my < panelH) {
+      hoverX = Math.floor(mx / pixelSize) * pixelSize;
+      hoverY = Math.floor(my / pixelSize) * pixelSize;
+    } else {
+      hoverX = -1;
+      hoverY = -1;
+    }
   } else {
-    hoverX = -1;
-    hoverY = -1;
+    if (mx < panelW && my < window.innerHeight) {
+      hoverX = Math.floor(mx / pixelSize) * pixelSize;
+      hoverY = Math.floor(my / pixelSize) * pixelSize;
+    } else {
+      hoverX = -1;
+      hoverY = -1;
+    }
   }
 
-  // 新增：检查是否悬停在项目名称上，改变鼠标样式
+  // 检查是否悬停在项目名称上，改变鼠标样式
   canvas.style.cursor = 'default';
   for (let area of projectClickAreas) {
     if (mx >= area.x && mx <= area.x + area.width && 
@@ -220,37 +226,58 @@ canvas.addEventListener('mousemove', (e) => {
 
 // 分步绘制函数
 function drawBasicUI() {
-  const layout = getLayoutParams();
+  const isMobileDevice = isMobile();
+  const panelW = isMobileDevice ? window.innerWidth : window.innerWidth / 2;
+  const panelH = isMobileDevice ? window.innerHeight / 2 : window.innerHeight;
 
   ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
 
-  // 绘制上半部分（手机）或左半部分（电脑）背景
-  ctx.fillStyle = '#f0f0f0';
-  ctx.fillRect(layout.topPanelX, layout.topPanelY, layout.topPanelW, layout.topPanelH);
+  if (isMobileDevice) {
+    // 移动端：上半部分绘制背景图片，下半部分绘制白色背景
+    ctx.fillStyle = '#f0f0f0';
+    ctx.fillRect(0, 0, panelW, panelH);
+    
+    ctx.fillStyle = 'white';
+    ctx.fillRect(0, panelH, panelW, panelH);
 
-  // 绘制下半部分（手机）或右半部分（电脑）白色背景
-  ctx.fillStyle = 'white';
-  ctx.fillRect(layout.bottomPanelX, layout.bottomPanelY, layout.bottomPanelW, layout.bottomPanelH);
+    // 如果图片已加载，绘制到上半部分
+    if (isImageLoaded) {
+      tempCtx.clearRect(0, 0, panelW, panelH);
+      tempCtx.drawImage(bg, 0, 0, panelW, panelH);
 
-  // 如果图片已加载，绘制图片
-  if (isImageLoaded) {
-    tempCtx.clearRect(0, 0, window.innerWidth, window.innerHeight);
-    tempCtx.drawImage(bg, layout.topPanelX, layout.topPanelY, layout.topPanelW, layout.topPanelH);
+      ctx.imageSmoothingEnabled = true;
+      ctx.imageSmoothingQuality = 'high';
+      ctx.drawImage(bg, 0, 0, panelW, panelH);
+    }
+  } else {
+    // 桌面端：保持原有的左右分割
+    ctx.fillStyle = '#f0f0f0';
+    ctx.fillRect(0, 0, panelW, panelH);
 
-    ctx.imageSmoothingEnabled = true;
-    ctx.imageSmoothingQuality = 'high';
-    ctx.drawImage(bg, layout.topPanelX, layout.topPanelY, layout.topPanelW, layout.topPanelH);
+    ctx.fillStyle = 'white';
+    ctx.fillRect(panelW, 0, panelW, panelH);
+
+    if (isImageLoaded) {
+      tempCtx.clearRect(0, 0, panelW, panelH);
+      tempCtx.drawImage(bg, 0, 0, panelW, panelH);
+
+      ctx.imageSmoothingEnabled = true;
+      ctx.imageSmoothingQuality = 'high';
+      ctx.drawImage(bg, 0, 0, panelW, panelH);
+    }
   }
 }
 
 function drawDataPoints() {
-  const layout = getLayoutParams();
+  const isMobileDevice = isMobile();
+  const panelW = isMobileDevice ? window.innerWidth : window.innerWidth / 2;
+  const panelH = isMobileDevice ? window.innerHeight / 2 : window.innerHeight;
 
   // 绘制云量数据点
   if (cloudcover.length > 0) {
     for (let i = 0; i < cloudcover.length; i++) {
-      let x = map(i, 0, cloudcover.length - 1, 50, layout.topPanelW - 50);
-      let y = map(cloudcover[i], 0, 100, layout.topPanelH - 50, 50);
+      let x = map(i, 0, cloudcover.length - 1, 50, panelW - 50);
+      let y = map(cloudcover[i], 0, 100, panelH - 50, 50);
 
       ctx.beginPath();
       ctx.arc(x, y, 2.5, 0, Math.PI * 2);
@@ -280,28 +307,27 @@ function drawDataPoints() {
 
 // 修改：将原来的 drawPoem 改为 drawProjects
 function drawProjects() {
-  const layout = getLayoutParams();
-  const isMobileLayout = isMobile();
-  
+  const isMobileDevice = isMobile();
+  const panelW = isMobileDevice ? window.innerWidth : window.innerWidth / 2;
+  const panelH = isMobileDevice ? window.innerHeight / 2 : window.innerHeight;
   projectClickAreas = []; // 重置点击区域
   
   // 绘制项目名称
   ctx.fillStyle = 'black';
-  ctx.font = isMobileLayout ? '12px Courier' : '14px Courier';
-  
+  ctx.font = '14px Courier';
   for (let i = 0; i < clickedCircles.length; i++) {
     if (projects[i]) {
       const c = clickedCircles[i];
       const projectName = projects[i].name;
       
       let x, y;
-      if (isMobileLayout) {
-        // 手机版：项目名称显示在下半部分
-        x = 20;
-        y = layout.bottomPanelY + 30 + (i * 25);
+      if (isMobileDevice) {
+        // 移动端：项目名称显示在下半部分，相对于点击点的位置调整
+        x = c.x + 25;
+        y = c.y + panelH; // 移到下半部分
       } else {
-        // 电脑版：保持原有逻辑
-        x = layout.bottomPanelX + c.x + 25;
+        // 桌面端：保持原有逻辑
+        x = panelW + c.x + 25;
         y = c.y;
       }
       
@@ -313,7 +339,7 @@ function drawProjects() {
         x: x,
         y: y,
         width: textWidth,
-        height: isMobileLayout ? 12 : 14,
+        height: 14,
         url: projects[i].url
       });
     }
@@ -321,8 +347,6 @@ function drawProjects() {
 }
 
 function drawHoverEffect() {
-  const layout = getLayoutParams();
-  
   if (hoverX >= 0 && hoverY >= 0 && isImageLoaded) {
     try {
       const imgData = tempCtx.getImageData(hoverX * dpr, hoverY * dpr, pixelSize * dpr, pixelSize * dpr);
