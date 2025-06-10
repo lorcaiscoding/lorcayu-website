@@ -33,6 +33,16 @@ canvas {
   z-index: 5;
 }
 
+/* 手机版模糊遮罩调整 */
+@media screen and (max-width: 768px) {
+  .blur-overlay {
+    top: 50%; /* 下半部分 */
+    right: 0;
+    width: 100%; /* 全宽 */
+    height: 50%; /* 下半部分高度 */
+  }
+}
+
 #top-left {
   position: absolute;
   top: 0px;
@@ -103,7 +113,7 @@ canvas {
   color: black;
   text-transform: uppercase;
   letter-spacing: 2px;
-  font-weight: 400;
+  font-weight: 400; /* 调整字体粗细，400是正常，300更细 */
   will-change: transform;
 }
 
@@ -122,5 +132,82 @@ canvas {
   }
   100% {
     transform: translateX(-50%);
+  }
+}
+
+/* 移动端响应式设计 */
+@media screen and (max-width: 768px) {
+  /* 右上角时间 - 仅在移动端增大字体 */
+  #top-right {
+    font-size: 32px; /* 仅移动端从24px增加到32px */
+    top: 15px;
+    right: 15px;
+  }
+  
+  /* 左上角标题适配 */
+  #top-left {
+    font-size: 36px; /* 稍微减小以适应小屏幕 */
+    left: 15px;
+    top: 5px;
+  }
+  
+  /* 滚动文字优化 */
+  #scrolling-message {
+    font-size: 12px; /* 稍微减小字体 */
+    letter-spacing: 1px; /* 减少字母间距 */
+  }
+  
+  #center-text {
+    left: 150px; /* 调整左边距 */
+    right: 120px; /* 调整右边距 */
+    top: 20px;
+  }
+  
+  /* 右下角目录适配 */
+  #catalog-title {
+    font-size: 36px; /* 减小字体 */
+  }
+  
+  #catalog-list div {
+    font-size: 32px; /* 减小字体 */
+    line-height: 1.2;
+  }
+  
+  #bottom-right {
+    bottom: 15px;
+    right: 15px;
+  }
+}
+
+/* 更小屏幕的优化 */
+@media screen and (max-width: 480px) {
+  /* 时间字体 - 仅在小屏移动端调整 */
+  #top-right {
+    font-size: 28px; /* 仅小屏移动端保持可读性 */
+  }
+  
+  /* 标题字体调整 */
+  #top-left {
+    font-size: 28px;
+  }
+  
+  /* 滚动文字进一步优化 */
+  #scrolling-message {
+    font-size: 10px;
+    letter-spacing: 0.5px;
+  }
+  
+  #center-text {
+    left: 120px;
+    right: 100px;
+  }
+  
+  /* 目录字体调整 */
+  #catalog-title {
+    font-size: 28px;
+  }
+  
+  #catalog-list div {
+    font-size: 24px;
   }
 }
