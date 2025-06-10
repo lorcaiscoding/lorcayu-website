@@ -38,6 +38,44 @@ const dpr = window.devicePixelRatio || 1;
 let isImageLoaded = false;
 let isDataLoaded = false;
 
+// 新增：检测是否为移动设备
+function isMobile() {
+  return window.innerWidth <= 768;
+}
+
+// 新增：获取布局参数
+function getLayoutParams() {
+  const isMobileLayout = isMobile();
+  const screenWidth = window.innerWidth;
+  const screenHeight = window.innerHeight;
+  
+  if (isMobileLayout) {
+    // 手机版：上下分屏
+    return {
+      topPanelW: screenWidth,
+      topPanelH: screenHeight / 2,
+      bottomPanelW: screenWidth,
+      bottomPanelH: screenHeight / 2,
+      topPanelX: 0,
+      topPanelY: 0,
+      bottomPanelX: 0,
+      bottomPanelY: screenHeight / 2
+    };
+  } else {
+    // 电脑版：左右分屏
+    return {
+      topPanelW: screenWidth / 2,
+      topPanelH: screenHeight,
+      bottomPanelW: screenWidth / 2,
+      bottomPanelH: screenHeight,
+      topPanelX: 0,
+      topPanelY: 0,
+      bottomPanelX: screenWidth / 2,
+      bottomPanelY: 0
+    };
+  }
+}
+
 function resize() {
   const rect = canvas.getBoundingClientRect();
   
@@ -105,14 +143,20 @@ canvas.addEventListener('mousedown', (e) => {
   const rect = canvas.getBoundingClientRect();
   const mx = e.clientX - rect.left;
   const my = e.clientY - rect.top;
-  const panelW = window.innerWidth / 2;
-  const panelH = window.innerHeight;
+  
+  const layout = getLayoutParams();
+  const isMobileLayout = isMobile();
 
-  // 左侧点击逻辑（保持原有逻辑，但添加智能隐藏）
-  if (mx <= panelW && cloudcover.length > 0) {
+  // 修改：根据设备类型调整点击区域判断
+  const isInTopPanel = isMobileLayout ? 
+    (my <= layout.topPanelH) : 
+    (mx <= layout.topPanelW);
+
+  // 上半部分（手机）或左半部分（电脑）点击逻辑
+  if (isInTopPanel && cloudcover.length > 0) {
     for (let i = 0; i < cloudcover.length; i++) {
-      let x = map(i, 0, cloudcover.length - 1, 50, panelW - 50);
-      let y = map(cloudcover[i], 0, 100, panelH - 50, 50);
+      let x = map(i, 0, cloudcover.length - 1, 50, layout.topPanelW - 50);
+      let y = map(cloudcover[i], 0, 100, layout.topPanelH - 50, 50);
 
       const d = Math.hypot(mx - x, my - y);
       if (d < 5) {
@@ -131,8 +175,8 @@ canvas.addEventListener('mousedown', (e) => {
       }
     }
   }
-  // 新增：右侧点击检测（项目名称点击）
-  else if (mx > panelW) {
+  // 下半部分（手机）或右半部分（电脑）点击检测
+  else if (!isInTopPanel) {
     for (let area of projectClickAreas) {
       if (mx >= area.x && mx <= area.x + area.width && 
           my >= area.y - area.height && my <= area.y + 5) {
@@ -145,11 +189,17 @@ canvas.addEventListener('mousedown', (e) => {
 
 canvas.addEventListener('mousemove', (e) => {
   const rect = canvas.getBoundingClientRect();
-  const panelW = window.innerWidth / 2;
   const mx = e.clientX - rect.left;
   const my = e.clientY - rect.top;
+  
+  const layout = getLayoutParams();
+  const isMobileLayout = isMobile();
 
-  if (mx < panelW && my < window.innerHeight) {
+  const isInTopPanel = isMobileLayout ? 
+    (my <= layout.topPanelH) : 
+    (mx <= layout.topPanelW);
+
+  if (isInTopPanel) {
     hoverX = Math.floor(mx / pixelSize) * pixelSize;
     hoverY = Math.floor(my / pixelSize) * pixelSize;
   } else {
@@ -170,39 +220,37 @@ canvas.addEventListener('mousemove', (e) => {
 
 // 分步绘制函数
 function drawBasicUI() {
-  const panelW = window.innerWidth / 2;
-  const panelH = window.innerHeight;
+  const layout = getLayoutParams();
 
   ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
 
-  // 绘制左半边背景（即使没有图片也显示占位）
+  // 绘制上半部分（手机）或左半部分（电脑）背景
   ctx.fillStyle = '#f0f0f0';
-  ctx.fillRect(0, 0, panelW, panelH);
+  ctx.fillRect(layout.topPanelX, layout.topPanelY, layout.topPanelW, layout.topPanelH);
 
-  // 绘制右半边白色背景
+  // 绘制下半部分（手机）或右半部分（电脑）白色背景
   ctx.fillStyle = 'white';
-  ctx.fillRect(panelW, 0, panelW, panelH);
+  ctx.fillRect(layout.bottomPanelX, layout.bottomPanelY, layout.bottomPanelW, layout.bottomPanelH);
 
   // 如果图片已加载，绘制图片
   if (isImageLoaded) {
-    tempCtx.clearRect(0, 0, panelW, panelH);
-    tempCtx.drawImage(bg, 0, 0, panelW, panelH);
+    tempCtx.clearRect(0, 0, window.innerWidth, window.innerHeight);
+    tempCtx.drawImage(bg, layout.topPanelX, layout.topPanelY, layout.topPanelW, layout.topPanelH);
 
     ctx.imageSmoothingEnabled = true;
     ctx.imageSmoothingQuality = 'high';
-    ctx.drawImage(bg, 0, 0, panelW, panelH);
+    ctx.drawImage(bg, layout.topPanelX, layout.topPanelY, layout.topPanelW, layout.topPanelH);
   }
 }
 
 function drawDataPoints() {
-  const panelW = window.innerWidth / 2;
-  const panelH = window.innerHeight;
+  const layout = getLayoutParams();
 
   // 绘制云量数据点
   if (cloudcover.length > 0) {
     for (let i = 0; i < cloudcover.length; i++) {
-      let x = map(i, 0, cloudcover.length - 1, 50, panelW - 50);
-      let y = map(cloudcover[i], 0, 100, panelH - 50, 50);
+      let x = map(i, 0, cloudcover.length - 1, 50, layout.topPanelW - 50);
+      let y = map(cloudcover[i], 0, 100, layout.topPanelH - 50, 50);
 
       ctx.beginPath();
       ctx.arc(x, y, 2.5, 0, Math.PI * 2);
@@ -232,18 +280,31 @@ function drawDataPoints() {
 
 // 修改：将原来的 drawPoem 改为 drawProjects
 function drawProjects() {
-  const panelW = window.innerWidth / 2;
+  const layout = getLayoutParams();
+  const isMobileLayout = isMobile();
+  
   projectClickAreas = []; // 重置点击区域
   
   // 绘制项目名称
   ctx.fillStyle = 'black';
-  ctx.font = '14px Courier';
+  ctx.font = isMobileLayout ? '12px Courier' : '14px Courier';
+  
   for (let i = 0; i < clickedCircles.length; i++) {
     if (projects[i]) {
       const c = clickedCircles[i];
       const projectName = projects[i].name;
-      const x = panelW + c.x + 25;
-      const y = c.y;
+      
+      let x, y;
+      if (isMobileLayout) {
+        // 手机版：项目名称显示在下半部分
+        x = 20;
+        y = layout.bottomPanelY + 30 + (i * 25);
+      } else {
+        // 电脑版：保持原有逻辑
+        x = layout.bottomPanelX + c.x + 25;
+        y = c.y;
+      }
+      
       ctx.fillText(projectName, x, y);
 
       // 计算文本宽度并存储点击区域
@@ -252,7 +313,7 @@ function drawProjects() {
         x: x,
         y: y,
         width: textWidth,
-        height: 14,
+        height: isMobileLayout ? 12 : 14,
         url: projects[i].url
       });
     }
@@ -260,6 +321,8 @@ function drawProjects() {
 }
 
 function drawHoverEffect() {
+  const layout = getLayoutParams();
+  
   if (hoverX >= 0 && hoverY >= 0 && isImageLoaded) {
     try {
       const imgData = tempCtx.getImageData(hoverX * dpr, hoverY * dpr, pixelSize * dpr, pixelSize * dpr);
