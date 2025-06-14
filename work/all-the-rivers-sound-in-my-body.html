@@ -363,6 +363,9 @@
   <script>
     let currentSlideIndex = 0;
     const totalSlides = 11;
+    let autoPlayInterval = null;
+    let isAutoPlaying = true;
+    const autoPlaySpeed = 1500; // 1.5秒切换一次
     
     // 每张图片的说明文字
     const slideCaptions = [
@@ -406,14 +409,51 @@
       showSlide(currentSlideIndex);
     }
 
+    function startAutoPlay() {
+      if (autoPlayInterval) {
+        clearInterval(autoPlayInterval);
+      }
+      autoPlayInterval = setInterval(nextSlide, autoPlaySpeed);
+      isAutoPlaying = true;
+    }
+
+    function stopAutoPlay() {
+      if (autoPlayInterval) {
+        clearInterval(autoPlayInterval);
+        autoPlayInterval = null;
+      }
+      isAutoPlaying = false;
+    }
+
+    // 手动导航时暂时停止自动播放，然后重新开始
+    function handleManualNavigation(navFunction) {
+      stopAutoPlay();
+      navFunction();
+      // 2秒后重新开始自动播放（如果之前是自动播放状态）
+      setTimeout(() => {
+        if (!isAutoPlaying) {
+          startAutoPlay();
+        }
+      }, 2000);
+    }
+
     // 键盘导航
     document.addEventListener('keydown', function(e) {
       if (e.key === 'ArrowLeft') {
-        previousSlide();
+        handleManualNavigation(previousSlide);
       } else if (e.key === 'ArrowRight') {
-        nextSlide();
+        handleManualNavigation(nextSlide);
       }
     });
+
+    // 重新定义按钮点击事件
+    document.querySelector('.gallery-prev').onclick = function() {
+      handleManualNavigation(previousSlide);
+    };
+
+    document.querySelector('.gallery-next').onclick = function() {
+      handleManualNavigation(nextSlide);
+    };
 
     document.addEventListener('DOMContentLoaded', function() {
       const images = document.querySelectorAll('.hero-image, .gallery-image');
@@ -427,6 +467,18 @@
           });
         }
       });
+
+      // 页面加载完成后开始自动播放
+      startAutoPlay();
+    });
+
+    // 页面失去焦点时暂停，获得焦点时恢复
+    document.addEventListener('visibilitychange', function() {
+      if (document.hidden) {
+        stopAutoPlay();
+      } else if (isAutoPlaying) {
+        startAutoPlay();
+      }
     });
   </script>
 </body>
