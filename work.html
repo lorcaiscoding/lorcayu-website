@@ -20,7 +20,7 @@
     }
 
     #top-left {
-      position: fixed;
+      position: absolute;
       top: 0px;
       left: 10px;
       font-size: 44px;
@@ -186,6 +186,20 @@
 
       .category-btn {
         font-size: 14px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .work-container {
+        padding: 60px 15px 30px 15px;
+      }
+
+      .category-nav {
+        gap: 15px;
+      }
+
+      .category-btn {
+        font-size: 12px;
       }
     }
   </style>
