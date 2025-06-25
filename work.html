@@ -35,6 +35,35 @@
       color: rgb(2, 254, 23); 
     }
 
+    .category-nav {
+      position: fixed;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 40px;
+      z-index: 10;
+    }
+
+    .category-btn {
+      font-size: 20px;
+      color: black;
+      cursor: pointer;
+      transition: color 0.3s ease;
+      background: none;
+      border: none;
+      font-family: 'DINdong', sans-serif;
+      letter-spacing: 0.05em;
+    }
+
+    .category-btn:hover {
+      color: rgb(2, 254, 23);
+    }
+
+    .category-btn.active {
+      color: rgb(2, 254, 23);
+    }
+
     .work-container {
       padding: 100px 50px 80px 50px;
       max-width: 1200px;
@@ -52,6 +81,10 @@
       display: flex;
       flex-direction: column;
       cursor: pointer;
+    }
+
+    .work-item.hidden {
+      display: none;
     }
 
     .work-image {
@@ -107,6 +140,35 @@
       .work-container {
         padding: 80px 30px 50px 30px;
       }
+
+      .category-nav {
+        gap: 25px;
+      }
+
+      .category-btn {
+        font-size: 18px;
+      }
+    }
+
+    @media (max-width: 768px) {
+      #top-left {
+        font-size: 32px;
+        position: fixed;
+        z-index: 20;
+      }
+
+      .work-container {
+        padding: 60px 20px 40px 20px;
+      }
+
+      .category-nav {
+        top: 60px;
+        gap: 20px;
+      }
+
+      .category-btn {
+        font-size: 16px;
+      }
     }
 
     @media (max-width: 600px) {
@@ -115,7 +177,15 @@
       }
       
       .work-container {
-        padding: 80px 20px 50px 20px;
+        padding: 60px 15px 30px 15px;
+      }
+
+      .category-nav {
+        gap: 15px;
+      }
+
+      .category-btn {
+        font-size: 14px;
       }
     }
   </style>
@@ -123,114 +193,108 @@
 <body>
   <div id="top-left" onclick="navigateToHome()">Lorca Yu</div>
   
+  <div class="category-nav">
+    <button class="category-btn" onclick="filterCategory('all')">all</button>
+    <button class="category-btn active" onclick="filterCategory('art')">art</button>
+    <button class="category-btn" onclick="filterCategory('fabrication')">fabrication</button>
+    <button class="category-btn" onclick="filterCategory('immersive')">immersive</button>
+  </div>
+  
   <div class="work-container">
     <div class="work-grid">
-      <!-- Project 1 -->
-      <div class="work-item" onclick="navigateToProject('la-noche-ciclica')">
+      <!-- Art Projects -->
+      <div class="work-item" data-category="art" onclick="navigateToProject('la-noche-ciclica')">
         <div class="work-image">
           <img src="assets/work/A.jpg" alt="La Noche Cíclica" />
         </div>
         <div class="work-title">La Noche Cíclica</div>
       </div>
 
-      <!-- Project 2 -->
-      <div class="work-item" onclick="navigateToProject('and-so-we-dance')">
-        <div class="work-image">
-          <img src="assets/work/B.jpg" alt="And So We Dance" />
-        </div>
-        <div class="work-title">And So We Dance</div>
-      </div>
-
-      <!-- Project 3 -->
-      <div class="work-item" onclick="navigateToProject('repair-shop')">
+      <div class="work-item" data-category="fabrication" onclick="navigateToProject('repair-shop')">
         <div class="work-image">
           <img src="assets/work/C.jpg" alt="Repair Shop" />
         </div>
         <div class="work-title">Repair Shop</div>
       </div>
 
-      <!-- Project 4 -->
-      <div class="work-item" onclick="navigateToProject('how-it-slips')">
+      <div class="work-item" data-category="fabrication" onclick="navigateToProject('how-it-slips')">
         <div class="work-image">
           <img src="assets/work/D.jpg" alt="How it Slips" />
         </div>
         <div class="work-title">How it Slips</div>
       </div>
 
-      <!-- Project 5 -->
-      <div class="work-item" onclick="navigateToProject('lami-intime')">
+      <div class="work-item" data-category="art fabrication" onclick="navigateToProject('and-so-we-dance')">
+        <div class="work-image">
+          <img src="assets/work/B.jpg" alt="And So We Dance" />
+        </div>
+        <div class="work-title">And So We Dance</div>
+      </div>
+
+      <div class="work-item" data-category="art fabrication" onclick="navigateToProject('lami-intime')">
         <div class="work-image">
           <img src="assets/work/E.jpg" alt="L'ami intime" />
         </div>
         <div class="work-title">L'ami intime</div>
       </div>
 
-      <!-- Project 6 -->
-      <div class="work-item" onclick="navigateToProject('claudia')">
+      <div class="work-item" data-category="art" onclick="navigateToProject('claudia')">
         <div class="work-image">
           <img src="assets/work/F.jpg" alt="Claudia" />
         </div>
         <div class="work-title">Claudia</div>
       </div>
 
-      <!-- Project 7 -->
-      <div class="work-item" onclick="navigateToProject('the-marvelous-clouds')">
+      <div class="work-item" data-category="art" onclick="navigateToProject('the-marvelous-clouds')">
         <div class="work-image">
           <img src="assets/work/G.jpg" alt="The Marvelous Clouds" />
         </div>
         <div class="work-title">The Marvelous Clouds</div>
       </div>
 
-      <!-- Project 8 -->
-      <div class="work-item" onclick="navigateToProject('all-the-rivers-sound-in-my-body')">
+      <div class="work-item" data-category="art" onclick="navigateToProject('all-the-rivers-sound-in-my-body')">
         <div class="work-image">
           <img src="assets/work/H.jpg" alt="All the Rivers Sound in My Body" />
         </div>
         <div class="work-title">All the Rivers Sound in My Body</div>
       </div>
 
-      <!-- Project 9 -->
-      <div class="work-item" onclick="navigateToProject('barcarolle-june')">
+      <div class="work-item" data-category="art" onclick="navigateToProject('barcarolle-june')">
         <div class="work-image">
           <img src="assets/work/I.jpg" alt="Barcarolle: June" />
         </div>
         <div class="work-title">Barcarolle: June</div>
       </div>
 
-      <!-- Project 10 -->
-      <div class="work-item" onclick="navigateToProject('god-is-a-woman-sitting-in-the-bath')">
+      <div class="work-item" data-category="art" onclick="navigateToProject('god-is-a-woman-sitting-in-the-bath')">
         <div class="work-image">
           <img src="assets/work/J.jpg" alt="God Is a Woman Sitting in the Bath" />
         </div>
         <div class="work-title">God Is a Woman Sitting in the Bath</div>
       </div>
 
-      <!-- Project 11 -->
-      <div class="work-item" onclick="navigateToProject('chungking-express')">
+      <div class="work-item" data-category="immersive" onclick="navigateToProject('chungking-express')">
         <div class="work-image">
           <img src="assets/work/K.jpg" alt="Chungking Express" />
         </div>
         <div class="work-title">Chungking Express</div>
       </div>
 
-      <!-- Project 12 -->
-      <div class="work-item" onclick="navigateToProject('do-not-feed-alligators')">
+      <div class="work-item" data-category="fabrication" onclick="navigateToProject('do-not-feed-alligators')">
         <div class="work-image">
           <img src="assets/work/L.jpg" alt="Do Not Feed Alligators" />
         </div>
         <div class="work-title">Do Not Feed Alligators</div>
       </div>
 
-      <!-- Project 13 -->
-      <div class="work-item" onclick="navigateToProject('i-really-like-your-work')">
+      <div class="work-item" data-category="fabrication" onclick="navigateToProject('i-really-like-your-work')">
         <div class="work-image">
           <img src="assets/work/M.jpg" alt="I Really Like Your Work" />
         </div>
         <div class="work-title">I Really Like Your Work</div>
       </div>
 
-      <!-- Project 14 -->
-      <div class="work-item" onclick="navigateToProject('seagull-untitled-acquired')">
+      <div class="work-item" data-category="art" onclick="navigateToProject('seagull-untitled-acquired')">
         <div class="work-image">
           <img src="assets/work/N.jpg" alt="Seagull, Untitled (Acquired)" />
         </div>
@@ -240,6 +304,8 @@
   </div>
 
   <script>
+    let currentCategory = 'all';
+
     function navigateToHome() {
       window.location.href = 'index.html';
     }
@@ -247,6 +313,31 @@
     function navigateToProject(projectId) {
       window.location.href = `work/${projectId}.html`;
     }
+
+    function filterCategory(category) {
+      currentCategory = category;
+      
+      // Update active button
+      document.querySelectorAll('.category-btn').forEach(btn => {
+        btn.classList.remove('active');
+      });
+      event.target.classList.add('active');
+      
+      // Show/hide projects
+      document.querySelectorAll('.work-item').forEach(item => {
+        const categories = item.getAttribute('data-category');
+        if (category === 'all' || (categories && categories.includes(category))) {
+          item.classList.remove('hidden');
+        } else {
+          item.classList.add('hidden');
+        }
+      });
+    }
+
+    // Initialize with all category
+    window.addEventListener('DOMContentLoaded', function() {
+      filterCategory('all');
+    });
   </script>
 </body>
 </html>
