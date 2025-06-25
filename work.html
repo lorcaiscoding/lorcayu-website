@@ -151,10 +151,17 @@
     }
 
     @media (max-width: 768px) {
+      html, body {
+        overflow-y: auto;
+        height: auto;
+      }
+
       #top-left {
-        font-size: 32px;
-        position: fixed;
-        z-index: 20;
+        font-size: 32px !important;
+        top: 0px !important;
+        z-index: 15 !important;
+        cursor: pointer !important;
+        position: absolute !important;
       }
 
       .work-container {
@@ -187,6 +194,14 @@
       .category-btn {
         font-size: 14px;
       }
+
+      #top-left {
+        font-size: 32px !important;
+        top: 0px !important;
+        z-index: 15 !important;
+        cursor: pointer !important;
+        position: absolute !important;
+      }
     }
 
     @media (max-width: 480px) {
@@ -200,6 +215,14 @@
 
       .category-btn {
         font-size: 12px;
+      }
+
+      #top-left {
+        font-size: 32px !important;
+        top: 0px !important;
+        z-index: 15 !important;
+        cursor: pointer !important;
+        position: absolute !important;
       }
     }
   </style>
@@ -335,7 +358,14 @@
       document.querySelectorAll('.category-btn').forEach(btn => {
         btn.classList.remove('active');
       });
-      event.target.classList.add('active');
+      
+      // Find and activate the correct button
+      const buttons = document.querySelectorAll('.category-btn');
+      buttons.forEach(btn => {
+        if (btn.textContent.trim() === category) {
+          btn.classList.add('active');
+        }
+      });
       
       // Show/hide projects
       document.querySelectorAll('.work-item').forEach(item => {
