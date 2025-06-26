@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Work - Lorca Yu</title>
   <style>
     @font-face {
@@ -9,6 +10,10 @@
       src: url('assets/fonts/DINdong.woff2') format('woff2');
       font-weight: normal;
       font-style: normal;
+    }
+
+    * {
+      box-sizing: border-box;
     }
 
     html, body {
@@ -38,23 +43,11 @@
     .category-nav {
       position: fixed;
       top: 20px;
-      left: 50%;
-      transform: translateX(-50%);
+      right: 10px;
+      transform: none;
       display: flex;
-      gap: 40px;
+      gap: 30px;
       z-index: 10;
-    }
-
-    @media (max-width: 768px) {
-      .category-nav {
-        position: fixed;
-        top: 45px;
-        left: 50%;
-        transform: translateX(-50%);
-        display: flex;
-        gap: 20px;
-        z-index: 10;
-      }
     }
 
     .category-btn {
@@ -66,6 +59,7 @@
       border: none;
       font-family: 'DINdong', sans-serif;
       letter-spacing: 0.05em;
+      padding: 0;
     }
 
     .category-btn:hover {
@@ -150,7 +144,7 @@
       }
       
       .work-container {
-        padding: 80px 30px 50px 30px;
+        padding: 100px 30px 50px 30px;
       }
 
       .category-nav {
@@ -162,41 +156,47 @@
       }
     }
 
+    /* Mobile styles */
     @media (max-width: 768px) {
-      html, body {
-        overflow-y: auto;
-        height: auto;
-      }
-
       #top-left {
-        font-size: 32px !important;
-        top: 0px !important;
-        z-index: 15 !important;
-        cursor: pointer !important;
-        position: absolute !important;
-      }
-
-      .work-container {
-        padding: 60px 20px 40px 20px;
+        font-size: 32px;
+        top: 0px;
+        left: 10px;
       }
 
       .category-nav {
-        top: 60px;
-        gap: 20px;
+        position: fixed;
+        top: 45px;
+        left: 10px;
+        right: 10px;
+        transform: none;
+        display: flex;
+        justify-content: space-between;
+        gap: 0;
+        background: transparent;
+        padding: 5px 0;
+        z-index: 15;
       }
 
       .category-btn {
         font-size: 16px;
+        flex: 1;
+        text-align: center;
+      }
+
+      .work-container {
+        padding: 100px 20px 40px 20px;
+      }
+
+      .work-grid {
+        grid-template-columns: 1fr;
+        gap: 30px;
       }
     }
 
     @media (max-width: 600px) {
-      .work-grid {
-        grid-template-columns: 1fr;
-      }
-      
       .work-container {
-        padding: 60px 15px 30px 15px;
+        padding: 100px 15px 30px 15px;
       }
 
       .category-nav {
@@ -206,35 +206,15 @@
       .category-btn {
         font-size: 14px;
       }
-
-      #top-left {
-        font-size: 32px !important;
-        top: 0px !important;
-        z-index: 15 !important;
-        cursor: pointer !important;
-        position: absolute !important;
-      }
     }
 
     @media (max-width: 480px) {
-      .work-container {
-        padding: 60px 15px 30px 15px;
-      }
-
       .category-nav {
-        gap: 15px;
+        gap: 12px;
       }
 
       .category-btn {
         font-size: 12px;
-      }
-
-      #top-left {
-        font-size: 32px !important;
-        top: 0px !important;
-        z-index: 15 !important;
-        cursor: pointer !important;
-        position: absolute !important;
       }
     }
   </style>
@@ -259,7 +239,7 @@
         <div class="work-title">La Noche Cíclica</div>
       </div>
 
-      <div class="work-item" data-category="fabrication" onclick="navigateToProject('repair-shop')">
+      <div class="work-item" data-category="art fabrication" onclick="navigateToProject('repair-shop')">
         <div class="work-image">
           <img src="assets/work/C.jpg" alt="Repair Shop" />
         </div>
