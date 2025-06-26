@@ -171,7 +171,8 @@
         right: 10px;
         transform: none;
         display: flex;
-        justify-content: space-between;
+        justify-content: space-around;
+        align-items: center;
         gap: 0;
         background: transparent;
         padding: 5px 0;
@@ -180,8 +181,9 @@
 
       .category-btn {
         font-size: 16px;
-        flex: 1;
+        flex: none;
         text-align: center;
+        padding: 5px 10px;
       }
 
       .work-container {
@@ -239,13 +241,6 @@
         <div class="work-title">La Noche Cíclica</div>
       </div>
 
-      <div class="work-item" data-category="art fabrication" onclick="navigateToProject('and-so-we-dance')">
-        <div class="work-image">
-          <img src="assets/work/B.jpg" alt="And So We Dance" />
-        </div>
-        <div class="work-title">And So We Dance</div>
-      </div>
-
       <div class="work-item" data-category="fabrication" onclick="navigateToProject('repair-shop')">
         <div class="work-image">
           <img src="assets/work/C.jpg" alt="Repair Shop" />
@@ -258,6 +253,13 @@
           <img src="assets/work/D.jpg" alt="How it Slips" />
         </div>
         <div class="work-title">How it Slips</div>
+      </div>
+
+      <div class="work-item" data-category="fabrication" onclick="navigateToProject('and-so-we-dance')">
+        <div class="work-image">
+          <img src="assets/work/B.jpg" alt="And So We Dance" />
+        </div>
+        <div class="work-title">And So We Dance</div>
       </div>
 
       <div class="work-item" data-category="art fabrication" onclick="navigateToProject('lami-intime')">
