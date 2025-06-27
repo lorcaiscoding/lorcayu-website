@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Seagull, Untitled (Acquired) - Lorca Yu</title>
+  <title>L'ami intime - Lorca Yu</title>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap');
 
@@ -72,7 +72,7 @@
       margin: 0 auto;
     }
 
-    /* 项目标题和信息 */
+    /* 项目标题和链接 - 移到主图片前面 */
     .project-header {
       margin-bottom: 30px;
       text-align: left;
@@ -84,6 +84,14 @@
       margin-bottom: 4px;
       line-height: 1.3;
       font-weight: 400;
+    }
+
+    .project-exhibition {
+      font-size: 11px;
+      color: black;
+      margin-bottom: 2px;
+      font-style: italic;
+      font-weight: 300;
     }
 
     .project-materials {
@@ -121,6 +129,15 @@
       margin-bottom: 16px;
     }
 
+    /* 展出信息 */
+    .exhibition-info {
+      font-size: 11px;
+      color: black;
+      margin-top: 20px;
+      font-style: italic;
+      font-weight: 300;
+    }
+
     /* 视频嵌入 */
     .video-embed {
       width: 100%;
@@ -133,6 +150,79 @@
       width: 100%;
       height: 100%;
       border: none;
+    }
+
+    /* 图片网格 */
+    .image-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 40px;
+      margin-top: 50px;
+    }
+
+    .project-image {
+      width: 100%;
+      max-width: 800px;
+      margin: 0 auto;
+      display: block;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .project-image.loaded {
+      opacity: 1;
+    }
+
+    /* 图片容器（用于添加说明文字） */
+    .image-container {
+      text-align: left;
+    }
+
+    /* 图片说明文字 */
+    .image-caption {
+      font-size: 10px;
+      color: #666;
+      margin-top: 8px;
+      font-style: italic;
+      text-align: left;
+      font-weight: 300;
+    }
+
+    /* 四张图片一排的布局 */
+    .four-image-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+      margin-top: 40px;
+      align-items: start;
+    }
+
+    .four-image-row .project-image {
+      width: 100%;
+      max-width: none;
+      height: 200px;
+      object-fit: cover;
+      object-position: center;
+    }
+
+    /* 最后的正方形图片 */
+    .final-image-container {
+      display: flex;
+      justify-content: center;
+      margin-top: 40px;
+    }
+
+    .final-square-image {
+      width: 200px;
+      height: 200px;
+      object-fit: cover;
+      object-position: center;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .final-square-image.loaded {
+      opacity: 1;
     }
 
     /* 响应式设计 */
@@ -151,6 +241,28 @@
 
       .project-materials {
         font-size: 10px;
+      }
+
+      .project-exhibition {
+        font-size: 10px;
+      }
+
+      .image-caption {
+        font-size: 9px;
+      }
+
+      .four-image-row {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 15px;
+      }
+
+      .four-image-row .project-image {
+        height: 150px;
+      }
+
+      .final-square-image {
+        width: 150px;
+        height: 150px;
       }
     }
 
@@ -190,12 +302,31 @@
         font-size: 16px;
       }
       
-      .project-materials {
+      .project-materials,
+      .project-exhibition {
         font-size: 11px;
       }
       
       .project-description {
         font-size: 11px;
+      }
+
+      .image-caption {
+        font-size: 8px;
+      }
+
+      .four-image-row {
+        grid-template-columns: repeat(4, 1fr);
+        gap: 5px;
+      }
+
+      .four-image-row .project-image {
+        height: 80px;
+      }
+
+      .final-square-image {
+        width: 120px;
+        height: 120px;
       }
     }
 
@@ -213,23 +344,52 @@
   
   <!-- 项目内容 -->
   <div class="project-container">
-    <!-- 项目标题和信息 -->
+    <!-- 项目标题和材料 - 现在在主图片前面 -->
     <div class="project-header">
-      <h1 class="project-title">Seagull, Untitled (Acquired) (2024)</h1>
-      <div class="project-materials">3D-printed seagull, MoMA</div>
+      <h1 class="project-title">L'ami intime (2024)</h1>
+      <div class="project-exhibition">exhibited at the 2024 Coney Island Maker Faire</div>
+      <div class="project-materials">wood, clear resin 3D print, scented candle</div>
     </div>
 
     <!-- 主图片 -->
-    <img src="../assets/seagull-untitled-acquired/hero-image.jpg" alt="Seagull, Untitled (Acquired)" class="hero-image">
+    <img src="../assets/lami-intime/hero-image.jpg" alt="L'ami intime" class="hero-image">
 
     <!-- 项目描述 -->
     <div class="project-description">
-      <p>When I placed a seagull pooping at MoMA.</p>
+      <p>The inspiration for this project comes from René Magritte's painting L'ami intime. I love how he uses the metaphor of a baguette and a wine glass to interpret friendship, as it reminds me of my undergraduate days in Beijing (yes, a difficult time). Each weekend, I would randomly go with one of my friends to a different exotic restaurant in the embassy district. It was the only opportunity to break free from our East Asian daily routine, which was entirely centered around rice. We ate baguettes, German roasted pork knuckles, Basbousa, and drank red wine like real adults. I'm not someone who enjoys large crowds, so I rarely have a large group of friends — most of my friendships are one-on-one. This suddenly made me realize that if you adjust the positions of the baguette and wine glass in the painting, they can form a small table for two.</p>
+
+      <p>I use the combination of shadows and movement to convey this dual meaning. Since suspended objects better reflect the surrealism in Magritte's paintings, I think automata would be a good medium for this expression. I set two extreme points of motion for the relative positions of the baguette and wine glass: one replicates where they are in Magritte's painting, while the other allows their shadows to form the outline of a table for two on the wall behind. They move back and forth between these two states over time. An apple-scented candle is used as the light source to add a sensory dimension to the performance, because the scent always reminds me of the coldest days of winter when my friend and I would eat apple pancakes together in the Russian restaurant.</p>
+
+      <p>So the whole light performance goes like this: when the lighter is first lit, it's like starting a fire for the stove, signifying the beginning of dinner. As the candlelight flickers and the fragrance spreads, the physical and shadow symbols alternate through mechanical motion. When the candle finally burns out, the beautiful dinner comes to an end, as all good things must come to a close.</p>
+
+      <p>A table for two can symbolize a date, a catch-up, or a reunion; all these experiences and conversations reflect our relationships and who we are.</p>
     </div>
 
-    <!-- 视频嵌入 -->
-    <div class="video-embed">
-      <iframe src="https://www.youtube.com/embed/tCoqGuIKEV8?si=I99n052XVmGFcOtH" title="Seagull, Untitled (Acquired)" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+    <!-- 更多图片 -->
+    <div class="image-grid">
+      <!-- Image 1 with caption -->
+      <div class="image-container">
+        <img src="../assets/lami-intime/image1.jpg" alt="L'ami intime Image 1" class="project-image">
+        <div class="image-caption">René Magritte's painting L'ami intime</div>
+      </div>
+      
+      <!-- Images 2, 3, 4 -->
+      <img src="../assets/lami-intime/image2.jpg" alt="L'ami intime Image 2" class="project-image">
+      <img src="../assets/lami-intime/image3.jpg" alt="L'ami intime Image 3" class="project-image">
+      <img src="../assets/lami-intime/image4.jpg" alt="L'ami intime Image 4" class="project-image">
+    </div>
+
+    <!-- Four images in a row -->
+    <div class="four-image-row">
+      <img src="../assets/lami-intime/image5.jpg" alt="L'ami intime Image 5" class="project-image">
+      <img src="../assets/lami-intime/image6.jpg" alt="L'ami intime Image 6" class="project-image">
+      <img src="../assets/lami-intime/image7.jpg" alt="L'ami intime Image 7" class="project-image">
+      <img src="../assets/lami-intime/image8.jpg" alt="L'ami intime Image 8" class="project-image">
+    </div>
+
+    <!-- Final centered square image -->
+    <div class="final-image-container">
+      <img src="../assets/lami-intime/image9.jpg" alt="L'ami intime Image 9" class="final-square-image">
     </div>
   </div>
 
@@ -243,7 +403,7 @@
     }
 
     document.addEventListener('DOMContentLoaded', function() {
-      const images = document.querySelectorAll('.hero-image');
+      const images = document.querySelectorAll('.project-image, .hero-image, .final-square-image');
       
       images.forEach(function(img) {
         if (img.complete) {
