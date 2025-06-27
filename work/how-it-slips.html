@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>How it Slips - Lorca Yu</title>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap');
@@ -21,11 +22,12 @@
       min-height: 100vh;
       line-height: 1.4;
       font-weight: 300;
+      overflow-x: hidden;
     }
 
     /* 顶部导航 */
     #top-left {
-      position: fixed;
+      position: absolute;
       top: 0px;
       left: 10px;
       font-size: 44px;
@@ -35,6 +37,9 @@
       cursor: pointer;
       transition: color 0.3s ease;
       font-family: 'DINdong', sans-serif;
+      line-height: 1;
+      margin: 0;
+      padding: 0;
     }
 
     #top-left:hover {
@@ -42,8 +47,8 @@
     }
 
     #back-button {
-      position: fixed;
-      top: 10px;
+      position: absolute;
+      top: 8px;
       right: 10px;
       font-size: 24px;
       color: black;
@@ -51,6 +56,9 @@
       z-index: 10;
       transition: color 0.3s ease;
       font-family: 'DINdong', sans-serif;
+      line-height: 1;
+      margin: 0;
+      padding: 0;
     }
 
     #back-button:hover {
@@ -157,6 +165,31 @@
       opacity: 1;
     }
 
+    /* Wearable GIF - 调整为较小尺寸并居中 */
+    .wearable-gif {
+      width: 100%;
+      max-width: 800px;
+      margin: 50px auto;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .wearable-gif img {
+      max-width: 400px; /* 限制最大宽度为400px，约为其他图片的一半 */
+      width: auto;
+      height: auto;
+      max-height: 500px; /* 限制最大高度，确保不会太高 */
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      display: block;
+      object-fit: contain; /* 保持比例 */
+    }
+
+    .wearable-gif img.loaded {
+      opacity: 1;
+    }
+
     /* 图片网格 */
     .image-grid {
       display: grid;
@@ -221,38 +254,78 @@
       .sponsorship-info {
         font-size: 10px;
       }
+
+      /* 响应式调整wearable gif */
+      .wearable-gif img {
+        max-width: 300px;
+        max-height: 400px;
+      }
+    }
+
+    @media (max-width: 768px) {
+      html, body {
+        overflow-y: auto;
+        height: auto;
+      }
+
+      #top-left {
+        font-size: 32px;
+        position: absolute;
+        top: 0px;
+        left: 10px;
+        z-index: 15;
+        cursor: pointer;
+        line-height: 1;
+        margin: 0;
+        padding: 0;
+      }
+      
+      #back-button {
+        font-size: 20px;
+        position: absolute;
+        top: 8px;
+        right: 10px;
+        line-height: 1;
+        margin: 0;
+        padding: 0;
+      }
+
+      .project-container {
+        padding: 80px 20px 50px 20px;
+      }
+      
+      .project-title {
+        font-size: 16px;
+      }
+      
+      .project-credits,
+      .project-exhibition,
+      .project-materials,
+      .project-link {
+        font-size: 11px;
+      }
+      
+      .project-description,
+      .sponsorship-info {
+        font-size: 11px;
+      }
+
+      /* 移动端进一步调整wearable gif */
+      .wearable-gif img {
+        max-width: 250px;
+        max-height: 350px;
+      }
     }
 
     @media (max-width: 600px) {
       .project-container {
         padding: 80px 20px 50px 20px;
       }
-      
-      .project-title {
-        font-size: 14px;
-      }
-      
-      .project-description {
-        font-size: 9px;
-      }
 
-      .project-credits,
-      .project-exhibition,
-      .project-materials,
-      .project-link {
-        font-size: 9px;
-      }
-
-      .sponsorship-info {
-        font-size: 9px;
-      }
-      
-      #top-left {
-        font-size: 32px;
-      }
-      
-      #back-button {
-        font-size: 20px;
+      /* 小屏幕调整wearable gif */
+      .wearable-gif img {
+        max-width: 200px;
+        max-height: 300px;
       }
     }
   </style>
@@ -297,7 +370,12 @@
       </div>
     </div>
 
-    <!-- GIF嵌入 -->
+    <!-- Wearable GIF嵌入 -->
+    <div class="wearable-gif">
+      <img src="../assets/how-it-slips/wearable.gif" alt="How it Slips Wearable GIF">
+    </div>
+
+    <!-- Performance GIF嵌入 -->
     <div class="gif-embed">
       <img src="../assets/how-it-slips/performance.gif" alt="How it Slips Performance GIF">
     </div>
@@ -311,6 +389,12 @@
     </div>
   </div>
 
+  <!-- Instagram嵌入脚本 -->
+  <script async src="//www.instagram.com/embed.js"></script>
+
+  <!-- Instagram嵌入脚本 -->
+  <script async src="//www.instagram.com/embed.js"></script>
+
   <script>
     function navigateToHome() {
       window.location.href = '../index.html';
@@ -321,7 +405,7 @@
     }
 
     document.addEventListener('DOMContentLoaded', function() {
-      const images = document.querySelectorAll('.project-image, .hero-image, .gif-embed img');
+      const images = document.querySelectorAll('.project-image, .hero-image, .gif-embed img, .wearable-gif img');
       
       images.forEach(function(img) {
         if (img.complete) {
