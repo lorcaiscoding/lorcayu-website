@@ -186,6 +186,18 @@
         padding: 5px 10px;
       }
 
+      .category-btn:active {
+        color: rgb(2, 254, 23);
+      }
+
+      .work-title:active {
+        color: rgb(2, 254, 23);
+      }
+
+      .work-item:active .work-title {
+        color: rgb(2, 254, 23);
+      }
+
       .work-container {
         padding: 100px 20px 40px 20px;
       }
@@ -371,7 +383,14 @@
       // Show/hide projects
       document.querySelectorAll('.work-item').forEach(item => {
         const categories = item.getAttribute('data-category');
-        if (category === 'all' || (categories && categories.includes(category))) {
+        if (category === 'all') {
+          // For 'all' category, hide the duplicate fabrication-only And So We Dance
+          if (categories === 'fabrication' && item.querySelector('.work-title').textContent === 'And So We Dance') {
+            item.classList.add('hidden');
+          } else {
+            item.classList.remove('hidden');
+          }
+        } else if (categories && categories.includes(category)) {
           item.classList.remove('hidden');
         } else {
           item.classList.add('hidden');
