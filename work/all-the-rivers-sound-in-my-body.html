@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>All the Rivers Sound in My Body - Lorca Yu</title>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap');
@@ -21,11 +22,12 @@
       min-height: 100vh;
       line-height: 1.4;
       font-weight: 300;
+      overflow-x: hidden;
     }
 
     /* 顶部导航 */
     #top-left {
-      position: fixed;
+      position: absolute;
       top: 0px;
       left: 10px;
       font-size: 44px;
@@ -35,6 +37,9 @@
       cursor: pointer;
       transition: color 0.3s ease;
       font-family: 'DINdong', sans-serif;
+      line-height: 1;
+      margin: 0;
+      padding: 0;
     }
 
     #top-left:hover {
@@ -42,8 +47,8 @@
     }
 
     #back-button {
-      position: fixed;
-      top: 10px;
+      position: absolute;
+      top: 8px;
       right: 10px;
       font-size: 24px;
       color: black;
@@ -51,6 +56,9 @@
       z-index: 10;
       transition: color 0.3s ease;
       font-family: 'DINdong', sans-serif;
+      line-height: 1;
+      margin: 0;
+      padding: 0;
     }
 
     #back-button:hover {
@@ -228,21 +236,48 @@
       }
     }
 
-    @media (max-width: 600px) {
+    @media (max-width: 768px) {
+      html, body {
+        overflow-y: auto;
+        height: auto;
+      }
+
+      #top-left {
+        font-size: 32px;
+        position: absolute;
+        top: 0px;
+        left: 10px;
+        z-index: 15;
+        cursor: pointer;
+        line-height: 1;
+        margin: 0;
+        padding: 0;
+      }
+      
+      #back-button {
+        font-size: 20px;
+        position: absolute;
+        top: 8px;
+        right: 10px;
+        line-height: 1;
+        margin: 0;
+        padding: 0;
+      }
+
       .project-container {
         padding: 80px 20px 50px 20px;
       }
       
       .project-title {
-        font-size: 14px;
+        font-size: 16px;
+      }
+      
+      .project-materials {
+        font-size: 11px;
       }
       
       .project-description {
-        font-size: 9px;
-      }
-
-      .project-materials {
-        font-size: 9px;
+        font-size: 11px;
       }
 
       .gallery-container {
@@ -256,13 +291,11 @@
       .gallery-caption {
         font-size: 8px;
       }
-      
-      #top-left {
-        font-size: 32px;
-      }
-      
-      #back-button {
-        font-size: 20px;
+    }
+
+    @media (max-width: 600px) {
+      .project-container {
+        padding: 80px 20px 50px 20px;
       }
     }
   </style>
