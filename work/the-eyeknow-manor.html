@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The EyeKnow Manor - Lorca Yu</title>
+  <link rel="icon" href="/assets/favicon/favicon.ico">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap');
+
+    @font-face {
+      font-family: 'DINdong';
+      src: url('../assets/fonts/DINdong.woff2') format('woff2');
+      font-weight: normal;
+      font-style: normal;
+    }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: white;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      min-height: 100vh;
+      line-height: 1.4;
+      font-weight: 300;
+      overflow-x: hidden;
+    }
+
+    /* 顶部导航 */
+    #top-left {
+      position: absolute;
+      top: 0px;
+      left: 10px;
+      font-size: 44px;
+      color: black;
+      letter-spacing: 0.05em;
+      z-index: 10;
+      cursor: pointer;
+      transition: color 0.3s ease;
+      font-family: 'DINdong', sans-serif;
+      line-height: 1;
+      margin: 0;
+      padding: 0;
+    }
+
+    #top-left:hover {
+      color: rgb(2, 254, 23); 
+    }
+
+    #back-button {
+      position: absolute;
+      top: 8px;
+      right: 10px;
+      font-size: 24px;
+      color: black;
+      cursor: pointer;
+      z-index: 10;
+      transition: color 0.3s ease;
+      font-family: 'DINdong', sans-serif;
+      line-height: 1;
+      margin: 0;
+      padding: 0;
+    }
+
+    #back-button:hover {
+      color: rgb(2, 254, 23);
+    }
+
+    /* 项目内容容器 */
+    .project-container {
+      padding: 100px 50px 40px 50px;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    /* 项目标题和信息 */
+    .project-header {
+      margin-bottom: 30px;
+      text-align: left;
+    }
+
+    .project-title {
+      font-size: 16px;
+      color: black;
+      margin-bottom: 4px;
+      line-height: 1.3;
+      font-weight: 400;
+    }
+
+    .project-credits {
+      font-size: 11px;
+      color: black;
+      margin-bottom: 2px;
+      font-weight: 300;
+      font-style: italic;
+    }
+
+    .project-exhibition {
+      font-size: 11px;
+      color: black;
+      margin-bottom: 2px;
+      font-style: italic;
+      font-weight: 300;
+    }
+
+    .project-materials {
+      font-size: 11px;
+      color: black;
+      margin-bottom: 4px;
+      font-style: italic;
+      font-weight: 300;
+    }
+
+    /* 主图片 */
+    .hero-image {
+      width: 100%;
+      max-width: 800px;
+      margin: 0 auto 30px auto;
+      display: block;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .hero-image.loaded {
+      opacity: 1;
+    }
+
+    /* 项目描述 */
+    .project-description {
+      font-size: 11px;
+      color: black;
+      line-height: 1.5;
+      margin-bottom: 20px;
+      font-weight: 300;
+    }
+
+    .project-description p {
+      margin-bottom: 16px;
+    }
+
+    /* 视频嵌入 */
+    .video-embed {
+      width: 100%;
+      max-width: 800px;
+      margin: 50px auto;
+      position: relative;
+      padding-bottom: 56.25%; /* 16:9 aspect ratio */
+      height: 0;
+      overflow: hidden;
+    }
+
+    .video-embed iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+
+    /* 图片网格 */
+    .image-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 40px;
+      margin-top: 50px;
+      margin-bottom: 0;
+    }
+
+    .project-image {
+      width: 100%;
+      max-width: 800px;
+      margin: 0 auto;
+      display: block;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .project-image.loaded {
+      opacity: 1;
+    }
+
+    /* 外部链接 */
+    .project-links {
+      margin-top: 20px;
+    }
+
+    .project-link {
+      font-size: 11px;
+      color: black;
+      text-decoration: underline;
+      transition: color 0.3s ease;
+      font-weight: 300;
+      display: block;
+      margin-bottom: 2px;
+    }
+
+    .project-link:hover {
+      color: rgb(2, 254, 23);
+    }
+
+    /* 响应式设计 */
+    @media (max-width: 900px) {
+      .project-container {
+        padding: 80px 30px 30px 30px;
+      }
+      
+      .project-title {
+        font-size: 15px;
+      }
+      
+      .project-description {
+        font-size: 10px;
+      }
+
+      .project-credits,
+      .project-exhibition,
+      .project-materials,
+      .project-link {
+        font-size: 10px;
+      }
+    }
+
+    @media (max-width: 768px) {
+      html, body {
+        overflow-y: auto;
+        height: auto;
+      }
+
+      #top-left {
+        font-size: 32px;
+        position: absolute;
+        top: 0px;
+        left: 10px;
+        z-index: 15;
+        cursor: pointer;
+        line-height: 1;
+        margin: 0;
+        padding: 0;
+      }
+      
+      #back-button {
+        font-size: 20px;
+        position: absolute;
+        top: 8px;
+        right: 10px;
+        line-height: 1;
+        margin: 0;
+        padding: 0;
+      }
+
+      .project-container {
+        padding: 80px 20px 25px 20px;
+      }
+      
+      .project-title {
+        font-size: 16px;
+      }
+      
+      .project-credits,
+      .project-exhibition,
+      .project-materials,
+      .project-link {
+        font-size: 11px;
+      }
+      
+      .project-description {
+        font-size: 11px;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .project-container {
+        padding: 80px 20px 20px 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- 导航 -->
+  <div id="top-left" onclick="navigateToHome()">Lorca Yu</div>
+  <div id="back-button" onclick="navigateToWork()">← Back to Work</div>
+  
+  <!-- 项目内容 -->
+  <div class="project-container">
+    <!-- 项目标题和信息 -->
+    <div class="project-header">
+      <h1 class="project-title">The EyeKnow Manor (2024)</h1>
+      <div class="project-credits">Immersive Halloween Activation for Fernet-Branca</div>
+      <div class="project-materials">animatronics, interactive installations</div>
+    </div>
+
+    <!-- 主图片 -->
+    <img src="../assets/the-eyeknow-manor/hero-image.jpg" alt="The EyeKnow Manor" class="hero-image">
+
+    <!-- 项目描述 -->
+    <div class="project-description">
+      <p>Set inside a reportedly haunted mansion in New Orleans, <em>The EyeKnow Manor</em> was a one-night-only immersive experience that brought Fernet-Branca's dark mystique to life through theatrical storytelling and animatronic spectacle.</p>
+
+      <p>As freelance producer, designer, and fabricator, I co-led the creation of two large-scale animatronic characters and interactive installations, each triggered by audience motion. Beyond hands-on building, I managed procurement, fabrication scheduling, and on-site AV integration within a fast-paced three-week timeline.</p>
+
+      <p>All components were modularized for efficient transport and rapid installation. Fusing mechanics, sensor-driven interactivity, and brand narrative, the activation invited guests into a surreal haunted world where Fernet's mythology collided with the eerie magic of the season.</p>
+
+      <!-- 外部链接 -->
+      <div class="project-links">
+        <a href="https://www.charlotteableman.com/projects/project-one-f5w4d-elx7m" target="_blank" class="project-link">→ More documentation</a>
+      </div>
+    </div>
+
+    <!-- YouTube视频嵌入 -->
+    <div class="video-embed">
+      <iframe src="https://www.youtube.com/embed/E5W743a5ZQc" 
+              title="The EyeKnow Manor" 
+              frameborder="0" 
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+              allowfullscreen>
+      </iframe>
+    </div>
+
+    <!-- 更多图片 -->
+    <div class="image-grid">
+      <img src="../assets/the-eyeknow-manor/image1.jpg" alt="The EyeKnow Manor Image 1" class="project-image">
+    </div>
+  </div>
+
+  <script>
+    function navigateToHome() {
+      window.location.href = '../index.html';
+    }
+
+    function navigateToWork() {
+      window.location.href = '../work.html';
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+      const images = document.querySelectorAll('.project-image, .hero-image');
+      
+      images.forEach(function(img) {
+        if (img.complete) {
+          img.classList.add('loaded');
+        } else {
+          img.addEventListener('load', function() {
+            img.classList.add('loaded');
+          });
+        }
+      });
+    });
+  </script>
+</body>
+</html>
